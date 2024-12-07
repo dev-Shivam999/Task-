@@ -58,29 +58,34 @@ const Home = () => {
             }
 
             <hr />
+<div className="flex flex-wrap gap-3">
 
-            {
-                List?.length > 0 ? List.map((p: any) => <div>
-                    <h1>{p.list}</h1>
-                  {  p.tasks.length > 0 && p.tasks.map((t: any) =><p>{t.title}</p>)}
-                    <button onClick={() => SetAddTask(true)}> Add</button>
+                {
+                    List?.length > 0 ? List.map((p: any) => <div key={p} className="border-zinc-700 border-2">
+                        <h1>{p.list}</h1>
+                        {p.tasks.length > 0 && p.tasks.map((t: any) => <p key={t}>{t.title}</p>)}
+                        <button onClick={() => SetAddTask(true)}> Add</button>
+                        {
+                            AddTask && <form onSubmit={(e) => TaskApi(e, p._id)} >
+                                <input type="text" ref={TaskRef} placeholder="name" />
+                            </form>
+                        }
+                    </div>) : <>
+                        Add List
+                    </>
+                }
+
+          <div>
+                    <button onClick={() => SetAddList(true)}>AddList</button>
                     {
-                        AddTask && <form onSubmit={(e) => TaskApi(e, p._id)} >
-                            <input type="text" ref={TaskRef} placeholder="name" />
+                        AddList &&
+                         <form onSubmit={(e) => ListApi(e)} >
+                            <input type="text" ref={ListRef} placeholder="name" />
                         </form>
                     }
-                </div>) : <>
-                    Add List
-                </>
-            }
-
-            <button onClick={() => SetAddList(true)}>AddList</button>
-            {
-                AddList && <form onSubmit={(e) => ListApi(e)} >
-                    <input type="text" ref={ListRef} placeholder="name" />
-                </form>
-            }
+          </div>
         </div>
+            </div>
     );
 };
 
