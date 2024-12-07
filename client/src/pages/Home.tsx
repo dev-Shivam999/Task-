@@ -62,6 +62,7 @@ const Home = () => {
             {
                 List?.length > 0 ? List.map((p: any) => <div>
                     <h1>{p.list}</h1>
+                  {  p.tasks.length > 0 && p.tasks.map((t: any) =><p>{t.title}</p>)}
                     <button onClick={() => SetAddTask(true)}> Add</button>
                     {
                         AddTask && <form onSubmit={(e) => TaskApi(e, p._id)} >

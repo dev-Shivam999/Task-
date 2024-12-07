@@ -37,17 +37,17 @@ export const Dashboard = async (req: Request, res: Response) => {
             },
             {
                 $lookup: {
-                    from: 'TaskSchema',
-                    localField: '_id',
-                    foreignField: 'listId',
-                    as: 'tasks',
+                    from: 'taskschemas', 
+                    localField: '_id', 
+                    foreignField: 'listId', 
+                    as: 'tasks', 
                 },
             },
           
             {
                 $project: {
                     list: 1,
-                    tasks: 1,
+                    tasks:{title: 1}
                 },
             },
         ]);
