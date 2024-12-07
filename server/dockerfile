@@ -1,0 +1,16 @@
+FROM node:18
+
+WORKDIR /user/app/src
+
+COPY tsconfig.json ./
+COPY packages*.json ./
+
+RUN npm i 
+
+COPY . .
+
+RUN tsc -b
+
+EXPOSE 3000
+
+CMD [ "node" "dist/index.js" ]

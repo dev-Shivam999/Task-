@@ -1,13 +1,15 @@
 import axios from "axios";
-import { useEffect,  useState } from "react";
+import { useContext, useEffect,  useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Lists from "../components/Lists";
 import ListAdd from "../components/ListAdd";
+import UseContext from "../context/context";
 
 const Home = () => {
     const [user, SetUser] = useState<UserType>()
     const [List, SetList] = useState<String[]>([])
 
+    const { userInfo }: any = useContext(UseContext)
     const navigate = useNavigate()
     const Api = async () => {
         try {
@@ -35,7 +37,7 @@ const Home = () => {
 
     useEffect(() => {
         Api()
-    }, [])
+    }, [userInfo])
     return (
         <div>
             DashBoard

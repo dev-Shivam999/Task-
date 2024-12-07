@@ -1,5 +1,6 @@
 import axios from 'axios';
-import  { useRef, useState } from 'react';
+import  { useContext, useRef, useState } from 'react';
+import UseContext from '../context/context';
 
 const AddTask = ({p}:{p:any}) => {
 
@@ -7,6 +8,7 @@ const AddTask = ({p}:{p:any}) => {
     const [AddTask, SetAddTask] = useState<Boolean>(false)
 
 
+    const { setUser }:any = useContext(UseContext)
     const TaskRef = useRef<HTMLInputElement>(null)
 
     const TaskApi = async (e: React.FormEvent<HTMLFormElement>, id: string) => {
@@ -15,16 +17,18 @@ const AddTask = ({p}:{p:any}) => {
             Id: id,
             Task: TaskRef.current?.value
         })
+        SetAddTask(false)
+        setUser((p:Boolean)=>!p)
     }
     return (
-        <>
-            <button onClick={() => SetAddTask(true)}> Add</button>
+        <div className='flex gap-1 items-center'>
             {
                 AddTask && <form onSubmit={(e) => TaskApi(e, p._id)} >
                     <input type="text" ref={TaskRef} placeholder="name" />
                 </form>
             }
-        </>
+            <button onClick={() => SetAddTask(true)}> Add</button>
+        </div>
     );
 };
 

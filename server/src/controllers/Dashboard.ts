@@ -9,7 +9,7 @@ export const Dashboard = async (req: Request, res: Response) => {
         
 
         if (!token) {
-            return res.status(401).json({ success: false, message: "Please log in" });
+            return res.json({ success: false, message: "Please log in" });
         }
 
 
