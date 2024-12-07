@@ -13,8 +13,9 @@ const Home = () => {
         const { data } = await axios.get('http://localhost:3000/api/Dashboard',{
             withCredentials: true
         })
-        SetUser(data.message.userInfo);
-        SetList(data.message.pp);
+        SetUser(data.data.user);
+        SetList(data.data.lists);
+
         if (!data.success) {
             navigate('/Login')
         }
@@ -29,6 +30,7 @@ const Home = () => {
             Id:user?._id
         })
         console.log(data);
+        
         
     }
 
@@ -47,7 +49,7 @@ const Home = () => {
           <hr />
 
 {
-    List.length>0?<div></div>:<>
+    List?.length>0?<div></div>:<>
     Add List
     </>
 }
