@@ -19,13 +19,13 @@ export const Dashboard = async (req: Request, res: Response) => {
             const decoded = jwt.verify(token, "lol") 
             userId = decoded;
         } catch (err) {
-            return res.status(401).json({ success: false, message: "Invalid or expired token" });
+            return res.json({ success: false, message: "Invalid or expired token" });
         }
 
 
         const userInfo = await UserSchema.findById(userId, { name: true });
         if (!userInfo) {
-            return res.status(401).json({ success: false, message: "User not found" });
+            return res.json({ success: false, message: "User not found" });
         }
 
 

@@ -13,7 +13,7 @@ const AddTask = ({p}:{p:any}) => {
 
     const TaskApi = async (e: React.FormEvent<HTMLFormElement>, id: string) => {
         e.preventDefault()
-        await axios.post('http://localhost:3000/api/TaskAdd', {
+        await axios.post(`${import.meta.env.VITE_API}TaskAdd`, {
             Id: id,
             Task: TaskRef.current?.value
         })
@@ -23,11 +23,11 @@ const AddTask = ({p}:{p:any}) => {
     return (
         <div className='flex gap-1 items-center'>
             {
-                AddTask && <form onSubmit={(e) => TaskApi(e, p._id)} >
+                AddTask && <form className='ps-2' onSubmit={(e) => TaskApi(e, p._id)} >
                     <input type="text" ref={TaskRef} placeholder="name" />
                 </form>
             }
-            <button onClick={() => SetAddTask(true)}> Add</button>
+            <button onClick={() => SetAddTask(true)} className='font-bold px-3 bg-slate-50 rounded-md p-1'> Add</button>
         </div>
     );
 };

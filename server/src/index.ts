@@ -6,6 +6,7 @@ import { Router } from './Router/Router';
 const port = 3000;
 import cookieParser from 'cookie-parser'
 
+
 DB()
 app.use(cors({
   origin:"http://localhost:5173",

@@ -13,7 +13,7 @@ const Home = () => {
     const navigate = useNavigate()
     const Api = async () => {
         try {
-            const { data } = await axios.get('http://localhost:3000/api/Dashboard', {
+            const { data } = await axios.get(`${import.meta.env.VITE_API}Dashboard`, {
                 withCredentials: true
             })
 
@@ -40,14 +40,16 @@ const Home = () => {
     }, [userInfo])
     return (
         <div>
-            DashBoard
-            <hr />
+         <div className="px-2 mb-6">
+                <h1 className="font-bold text-5xl text-center my-4">  DashBoard</h1>
+                <hr />
 
-            Name:{
-                user?.name
-            }
+                Name:{
+                    user?.name
+                }
 
-            <hr />
+                <hr />
+         </div>
             <div className="flex flex-wrap gap-3">
 
                 {

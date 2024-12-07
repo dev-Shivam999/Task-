@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { UserSC, UserSchema } from "../models/models";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 export const Login = async (req: Request, res: Response) => {
     const { email, password } = req.body;
@@ -12,21 +13,24 @@ export const Login = async (req: Request, res: Response) => {
     try {
         const user: UserSC | null = await UserSchema.findOne({ email });
 
-        if (user && await bcrypt.compare(password, user.password)) {
-
-            res
-                .cookie("token", user._id, {
-                    httpOnly: true,
-                    sameSite: "strict",
-                    secure: true
-                })
-                .status(200)
-                .json({ success: true, message: "Login successful" });
+        if (!user || !bcrypt.compareSync(password, user.password)) {
+            
+            return res.status(401).json({ success: false, message: "Invalid email or password" });
         }
 
-        res.status(401).json({ success: false, message: "Invalid email or password" });
+        const jwtToken = jwt.sign(String(user._id), "lol");
+
+        
+        return res
+            .cookie("token", jwtToken, {
+                httpOnly: true,
+                sameSite: "strict",
+                secure: true,
+            })
+            .status(200)
+            .json({ success: true, message: "Login successful" });
     } catch (error) {
         console.error("Error during login:", error);
-        res.status(500).json({ success: false, message: "An error occurred during login" });
+        return res.status(500).json({ success: false, message: "An error occurred during login" });
     }
 };
