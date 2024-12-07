@@ -5,23 +5,33 @@ export const List = async (req: Request, res: Response) => {
     try {
         const { ListName, Id } = req.body;
 
-    
+        
         if (!ListName || !Id) {
-             res.status(400).json({ success: false, message: "ListName and Id are required" });
+            res.status(400).json({
+                success: false,
+                message: "ListName and Id are required"
+            });
         }
 
-        console.log(Id);
+        
 
-    
-        await ListSchema.create({
-            UserId: Id,
-            List: ListName
+        
+        const newList = await ListSchema.create({
+            userId: Id,
+            list: ListName,
         });
 
-    
-        res.status(201).json({ success: true, message: "List created successfully" });
+        
+        res.status(201).json({
+            success: true,
+            message: "List created successfully",
+            data: newList
+        });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false, message: "An error occurred while creating the list", error: error });
+        console.error("Error creating list:", error);
+        res.status(500).json({
+            success: false,
+            message: "An error occurred while creating the list",
+        });
     }
-}
+};

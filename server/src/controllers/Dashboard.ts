@@ -29,18 +29,28 @@ export const Dashboard = async (req: Request, res: Response) => {
         }
 
 
-        const lists = await ListSchema.find({ userId })
-            .populate({
-                path: "userId",
-                select: "name email", 
-            })
-            .populate({
-                path: "_id", 
-                populate: {
-                    path: "tasks", 
-                    select: "title ", 
+        const lists = await ListSchema.aggregate([
+            {
+                $match: {
+                    userId: userInfo._id,
                 },
-            });
+            },
+            {
+                $lookup: {
+                    from: 'TaskSchema',
+                    localField: '_id',
+                    foreignField: 'listId',
+                    as: 'tasks',
+                },
+            },
+          
+            {
+                $project: {
+                    list: 1,
+                    tasks: 1,
+                },
+            },
+        ]);
 
         res.status(200).json({
             success: true,

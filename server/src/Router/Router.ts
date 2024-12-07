@@ -3,6 +3,7 @@ import { Dashboard } from '../controllers/Dashboard';
 import { Login } from '../controllers/Login';
 import { Sign } from '../controllers/Sign';
 import { List } from '../controllers/List';
+import { Task } from '../controllers/Task';
 
 
 export const Router=express.Router();
@@ -15,3 +16,4 @@ Router.post('/Login', Login)
 //@ts-ignore
 Router.post('/Sign', Sign) 
 Router.post('/List', List) 
+Router.post('/TaskAdd', Task) 
