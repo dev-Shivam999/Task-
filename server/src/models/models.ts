@@ -19,6 +19,10 @@ const UserLogin = new mongoose.Schema(
             type: String,
             required: true,
         },
+        Color:{
+            type: String,
+            default:"black"
+        }
     },
     { timestamps: true }
 );
@@ -30,6 +34,10 @@ const List = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "UserSchema",
             required: true,
+        },
+        Color: {
+            type: String,
+            default: "black"
         },
         list: {
             type: String,
@@ -46,6 +54,10 @@ const Task = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "ListSchema",
             required: true,
+        },
+        Color: {
+            type: String,
+            default: "black"
         },
         title: {
             type: String,

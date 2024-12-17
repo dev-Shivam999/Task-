@@ -20,9 +20,10 @@ const Login = () => {
                 }, {
                     withCredentials: true
                 });
-                console.log(data);
                 if (data.success) {
                     navigate('/');
+                }else{
+                    alert(data.message)
                 }
             } else {
                 alert("fill all the fields")

@@ -4,4 +4,5 @@
 interface UserType{
     name:String;
     _id:String;
+    Color:String
 }

@@ -8,7 +8,7 @@ import Sign from "./pages/Sign";
 
 const App = () => {
   return (
-    <div>
+    
 
       <Routes>
         <Route path="/" element={<Home/>}/>
@@ -16,7 +16,7 @@ const App = () => {
         <Route path="/Sign" element={<Sign/>}/>
       </Routes>
       
-    </div>
+ 
   );
 };
 

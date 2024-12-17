@@ -6,28 +6,29 @@ export const Dashboard = async (req: Request, res: Response) => {
     try {
         const cookies = req.cookies;
         const token = cookies?.token;
-        
 
         if (!token) {
             return res.json({ success: false, message: "Please log in" });
         }
 
-
         let userId;
-        
+
         try {
-            const decoded = jwt.verify(token, "lol") 
-            userId = decoded;
+            const decoded: any = jwt.verify(token, "lol");
+            userId = decoded; 
+            
         } catch (err) {
             return res.json({ success: false, message: "Invalid or expired token" });
         }
 
+        if (!userId ) {
+            return res.json({ success: false, message: "Invalid userId" });
+        }
 
-        const userInfo = await UserSchema.findById(userId, { name: true });
+        const userInfo = await UserSchema.findById(userId, { name: true,Color:true });
         if (!userInfo) {
             return res.json({ success: false, message: "User not found" });
         }
-
 
         const lists = await ListSchema.aggregate([
             {
@@ -37,17 +38,16 @@ export const Dashboard = async (req: Request, res: Response) => {
             },
             {
                 $lookup: {
-                    from: 'taskschemas', 
-                    localField: '_id', 
-                    foreignField: 'listId', 
-                    as: 'tasks', 
+                    from: "taskschemas",
+                    localField: "_id",
+                    foreignField: "listId",
+                    as: "tasks",
                 },
             },
-          
             {
                 $project: {
                     list: 1,
-                    tasks:{title: 1}
+                    tasks: { title: 1 },
                 },
             },
         ]);
