@@ -4,6 +4,7 @@ import { Login } from '../controllers/Login';
 import { Sign } from '../controllers/Sign';
 import { List } from '../controllers/List';
 import { Task } from '../controllers/Task';
+import { UpdateColor } from '../controllers/UpdateColor';
 
 
 export const Router=express.Router();
@@ -17,3 +18,4 @@ Router.post('/Login', Login)
 Router.post('/Sign', Sign) 
 Router.post('/List', List) 
 Router.post('/TaskAdd', Task) 
+Router.put('/UpdateColor', UpdateColor) 

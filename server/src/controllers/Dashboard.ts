@@ -47,7 +47,8 @@ export const Dashboard = async (req: Request, res: Response) => {
             {
                 $project: {
                     list: 1,
-                    tasks: { title: 1 },
+                    Color:1,
+                    tasks: { title: 1,Color:1, _id:1 },
                 },
             },
         ]);

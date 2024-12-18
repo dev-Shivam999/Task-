@@ -27,7 +27,7 @@ const AddTask = ({p}:{p:any}) => {
                     <input type="text" ref={TaskRef} placeholder="name" />
                 </form>
             }
-            <button onClick={() => SetAddTask(true)} className='font-bold px-3 bg-slate-50 rounded-md p-1'> Add</button>
+            <button onClick={() => SetAddTask(true)} className='font-bold px-3 bg-slate-50 text-black rounded-md p-1'> Add</button>
         </div>
     );
 };

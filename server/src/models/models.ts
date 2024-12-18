@@ -37,7 +37,7 @@ const List = new mongoose.Schema(
         },
         Color: {
             type: String,
-            default: "black"
+            default: "yellow",
         },
         list: {
             type: String,
