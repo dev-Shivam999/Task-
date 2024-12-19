@@ -1,14 +1,14 @@
 import axios from 'axios';
-import  { useContext, useRef, useState } from 'react';
-import UseContext from '../context/context';
+import  {  useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setList } from '../store/data';
 
 const AddTask = ({p}:{p:any}) => {
 
 
     const [AddTask, SetAddTask] = useState<Boolean>(false)
 
-
-    const { setUser }:any = useContext(UseContext)
+const dispatch=useDispatch()
     const TaskRef = useRef<HTMLInputElement>(null)
 
     const TaskApi = async (e: React.FormEvent<HTMLFormElement>, id: string) => {
@@ -18,7 +18,7 @@ const AddTask = ({p}:{p:any}) => {
             Task: TaskRef.current?.value
         })
         SetAddTask(false)
-        setUser((p:Boolean)=>!p)
+        dispatch(setList())
     }
     return (
         <div className='flex gap-1 items-center'>

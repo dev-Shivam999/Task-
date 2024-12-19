@@ -13,7 +13,7 @@ export const Drag = async (req: Request, res: Response) => {
         );
 
         if (!list1) {
-            return res.status(404).send("List 1 not found");
+         res.status(404).send("List 1 not found");
         }
 
         
@@ -24,7 +24,7 @@ export const Drag = async (req: Request, res: Response) => {
         );
 
         if (!list2) {
-            return res.status(404).send("List 2 not found");
+         res.status(404).send("List 2 not found");
         }
 
         
@@ -34,9 +34,9 @@ export const Drag = async (req: Request, res: Response) => {
             { new: true }
         );
 
-        return res.status(200).send("Task moved successfully");
+        res.status(200).send("Task moved successfully");
     } catch (error) {
         console.error(error);
-        return res.status(500).send("An error occurred");
+         res.status(500).send("An error occurred");
     }
 };

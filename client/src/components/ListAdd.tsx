@@ -1,14 +1,15 @@
 import axios from 'axios';
-import { useContext, useRef, useState } from 'react';
-import UseContext from '../context/context';
+import {  useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setList } from '../store/data';
 
 const ListAdd = ({ user }: { user: any }) => {
 
     const [AddList, SetAddList] = useState<Boolean>(false)
 
     const ListRef = useRef<HTMLInputElement>(null)
+    const dispatch=useDispatch()
 
-    const { setUser }: any = useContext(UseContext)
     const ListApi = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (ListRef.current?.value.trim()=="") {
@@ -19,7 +20,7 @@ const ListAdd = ({ user }: { user: any }) => {
             Id: user?._id
         })
         SetAddList(false)
-        setUser((p:boolean)=>!p)
+        dispatch(setList())
 
     }
     return (
