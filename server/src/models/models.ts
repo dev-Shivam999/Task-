@@ -1,5 +1,5 @@
 import mongoose, { Model } from "mongoose";
-import { ListType, TaskType, User } from "../utils/Types/Types";
+import { AttachFileType, ListType, TaskType, TimerType, User } from "../utils/Types/Types";
 
 
 export type UserSC = User & mongoose.Document;
@@ -22,6 +22,13 @@ const UserLogin = new mongoose.Schema(
         Color:{
             type: String,
             default:"black"
+        }
+        ,
+        Timer:{
+            type:Number,
+            default:Date.now() + 15 * 24 * 60 * 60 * 1000
+  
+            
         }
     },
     { timestamps: true }
@@ -63,10 +70,51 @@ const Task = new mongoose.Schema(
             type: String,
             required: true,
         },
+        isDead: {
+            type: Boolean,
+            default: false,
+        },
+        isComplete: {
+            type: Boolean,
+            default: false,
+        }
+
+       
     },
     { timestamps: true }
 );
 
+const Timer=new mongoose.Schema({
+    TaskId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "TaskSchema",
+        required: true,
+    },
+    StartTime: {
+        type: String,
+
+    }, EndTime: {
+        type: String,
+    },
+    Reminder: {
+        type: String,
+    }
+})
+
+const AttachFile =new mongoose.Schema({
+    TaskId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "TaskSchema",
+        required: true,
+    },
+    FileLink: {
+        type: String,
+
+    }
+})
+
 export const UserSchema: Model<UserSC> = mongoose.model<UserSC>("UserSchema", UserLogin);
 export const ListSchema: Model<ListType> = mongoose.model<ListType>("ListSchema", List);
 export const TaskSchema: Model<TaskType> = mongoose.model<TaskType>("TaskSchema", Task);
+export const TimerSchema: Model<TimerType> = mongoose.model<TimerType>("TimerSchema", Timer);
+export const AttachFileSchema: Model<AttachFileType> = mongoose.model<AttachFileType>("AttachFileSchema", AttachFile);

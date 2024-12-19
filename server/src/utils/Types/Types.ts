@@ -2,7 +2,8 @@ export interface User {
     name: string;
     email: string;
     password: string;
-    Color:string
+    Color: string
+    Timer: number
 
 }
 
@@ -12,8 +13,20 @@ export interface ListType {
     Color: string
 }
 
-export interface TaskType{
+export interface TaskType {
     ListId: any;
-    Title:string
-    Color: string
+    Title: string
+    Color: string,
+
+}
+export interface TimerType {
+    TaskId: string
+    StartTime: string
+
+    EndTime: string,
+    Reminder: string
+}
+export interface AttachFileType{
+    TaskId: string
+    FilePath: string 
 }

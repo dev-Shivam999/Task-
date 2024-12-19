@@ -2,6 +2,7 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import AddTask from "./AddTask";
 import Dot from "./Dot";
 import axios from "axios";
+import LI from "./LI";
 
 const Lists = ({
     lists,
@@ -47,8 +48,8 @@ const Lists = ({
         setLists(updatedLists);
 
         axios.post(`${import.meta.env.VITE_API}Drag`, {
-            TaskID:  taskId,
-            ListID1:  sourceListId,
+            TaskID: taskId,
+            ListID1: sourceListId,
             ListID2: destinationListId,
         });
     };
@@ -87,10 +88,10 @@ const Lists = ({
                                                         ...provided.draggableProps.style,
                                                         backgroundColor: task.Color,
                                                     }}
-                                                    className="my-1 flex relative font-bold items-end justify-between px-3 text-white"
+                                                    className={` my-1 flex relative font-bold items-end justify-between px-3 text-white`}
                                                 >
-                                                    {task.title}
-                                                    <Dot id={task._id} type="List" />
+                                                    <LI task={task} />
+                                                    <Dot id={task._id} color={task.Color} name={task.title} type="List" />
                                                 </li>
                                             )}
                                         </Draggable>
