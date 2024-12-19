@@ -13,10 +13,8 @@ const Lists = ({
     const handleDragEnd = (result: any) => {
         const { source, destination } = result;
 
-        // If dropped outside a valid destination
         if (!destination) return;
 
-        // If dropped in the same location
         if (
             source.droppableId === destination.droppableId &&
             source.index === destination.index
