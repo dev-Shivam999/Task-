@@ -59,7 +59,10 @@ const Dot: FC<{ id: string, type: string, color?: string, name?: string }> = ({ 
                             </button>
 
                             <div>
-                                <input type="file" />
+                               <div>
+                                        <input type="file" />
+
+                               </div>
                             </div>
 
                         </div>
