@@ -7,11 +7,13 @@ export const UpdateColor = async (req: Request, res: Response) => {
        const { type, Color, id } = await req.body
        if (type == "List") {
         
-          await TaskSchema.findByIdAndUpdate(id, { $set: { Color: Color } })
+        const date=  await TaskSchema.findByIdAndUpdate(id, { $set: { Color: Color } })
+       
+        
         
            res.json({ success: true })
        } else {
-           await ListSchema.findByIdAndUpdate({ _id: id }, { $set: { Color: Color } })
+           await ListSchema.findByIdAndUpdate( id , { $set: { Color: Color } })
            res.json({ success: true })
 
        }

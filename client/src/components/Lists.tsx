@@ -3,6 +3,7 @@ import AddTask from "./AddTask";
 import Dot from "./Dot";
 import axios from "axios";
 import LI from "./LI";
+import { useState } from "react";
 
 const Lists = ({
     lists,
@@ -11,6 +12,13 @@ const Lists = ({
     lists: any[];
     setLists: (updatedLists: any[]) => void;
 }) => {
+
+    const [DotClick,setDotClick]=useState(
+        {
+            Dot1:false,
+            Dot2:false,
+        }
+    )
     const handleDragEnd = (result: any) => {
         const { source, destination } = result;
 
@@ -70,7 +78,9 @@ const Lists = ({
                                     <h1 className="font-bold py-3 text-center">
                                         {String(list.list).toLocaleUpperCase()}
                                     </h1>
-                                    <Dot id={list._id} type="Task" />
+                                    <div onClick={() => setDotClick(p =>({...p,Dot1:!DotClick.Dot1}))} className="text-3xl cursor-pointer">
+                                        ...
+                                    </div>  {DotClick.Dot1&&  <Dot id={list._id} type="Task" />}
                                 </div>
                                 <ul>
                                     {list.tasks.map((task: any, taskIndex: number) => (
@@ -91,8 +101,9 @@ const Lists = ({
                                                     className={` my-1 flex relative font-bold items-end justify-between px-3 text-white`}
                                                 >
                                                     <LI task={task} />
-                                                    <Dot id={task._id} color={task.Color} name={task.title} type="List" />
-                                                </li>
+                                                    <div onClick={() => setDotClick(p => ({ ...p, Dot2: !DotClick.Dot2 }))} className="text-3xl cursor-pointer">
+                                                        ...
+                                                    </div>  {DotClick.Dot2 && <Dot id={task._id} color={task.Color} name={task.title} type="List" />}  </li>
                                             )}
                                         </Draggable>
                                     ))}

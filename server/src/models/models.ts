@@ -110,7 +110,11 @@ const AttachFile =new mongoose.Schema({
     FileLink: {
         type: String,
 
+    },
+    FileName: {
+        type :String
     }
+
 })
 
 export const UserSchema: Model<UserSC> = mongoose.model<UserSC>("UserSchema", UserLogin);

@@ -8,6 +8,8 @@ import { UpdateColor } from '../controllers/UpdateColor';
 import { Drag } from '../controllers/Drag';
 import { Profile } from '../controllers/Profile';
 import { UpdateProfile } from '../controllers/UpdateProfile';
+import { TaskApi } from '../controllers/TaskApi';
+import { TaskFile } from '../controllers/taskFile';
 
 
 export const Router=express.Router();
@@ -17,6 +19,9 @@ export const Router=express.Router();
 Router.get('/Dashboard', Dashboard)
 //@ts-ignore
 Router.get('/Profile', Profile)
+Router.post('/TaskFile', TaskFile)
+//@ts-ignore
+Router.post('/TaskApi', TaskApi)
 //@ts-ignore
 Router.post('/Login', Login) 
 //@ts-ignore
