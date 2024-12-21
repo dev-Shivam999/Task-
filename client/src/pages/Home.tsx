@@ -1,20 +1,19 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Lists from "../components/Lists";
 import ListAdd from "../components/ListAdd";
 
 const Home = () => {
     const [user, setUser] = useState<UserType>();
-    const [lists, setLists] = useState<any[]>([]);
     const [Time, setTime] = useState()
 
     const navigate = useNavigate();
 
     const Api = async () => {
         try {
-            const { data } = await axios.get(`${import.meta.env.VITE_API}Dashboard`, {
+            const { data } = await axios.get(`${import.meta.env.VITE_API}Dashboard1`, {
                 withCredentials: true,
             });
 
@@ -31,17 +30,15 @@ const Home = () => {
             }
             setUser(data.data.user);
             setTime(data.data.Time);
-            setLists(data.data.lists);
         } catch (error) {
             console.log(error);
         }
     };
 
-    const { User } = useSelector((p: any) => p.data);
 
     useEffect(() => {
         Api();
-    }, [User]);
+    }, []);
     const [sideShow, setSideShow] = useState<boolean>(false)
 
 
@@ -71,6 +68,9 @@ const Home = () => {
                         <div>Name: {user?.name}</div>
 
                         <div className="flex gap-3 items-center">
+                            <Link to={'Table'} className="bg-white text-black mix-blend-difference px-3 py-1 rounded-md">
+                               Table
+                            </Link>
                             <div className="bg-white text-black mix-blend-difference px-3 py-1 rounded-md">
                                 {
                                     Time
@@ -83,8 +83,9 @@ const Home = () => {
                     </div>
                     <hr />
                 </div>
-                <Lists lists={lists} setLists={setLists} />
-                <ListAdd user={user} />
+
+                <Outlet/>
+             
             </div>
 
         </div>

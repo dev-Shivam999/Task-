@@ -12,13 +12,15 @@ const Lists = ({
     lists: any[];
     setLists: (updatedLists: any[]) => void;
 }) => {
+    const [dotVisibility, setDotVisibility] = useState<Record<string, boolean>>({});
 
-    const [DotClick,setDotClick]=useState(
-        {
-            Dot1:false,
-            Dot2:false,
-        }
-    )
+    const toggleDotVisibility = (id: string) => {
+        setDotVisibility((prev) => ({
+            ...prev,
+            [id]: !prev[id],
+        }));
+    };
+
     const handleDragEnd = (result: any) => {
         const { source, destination } = result;
 
@@ -40,10 +42,6 @@ const Lists = ({
         const taskId = sourceList.tasks[source.index]._id;
         const sourceListId = sourceList._id;
         const destinationListId = destinationList._id;
-
-        console.log("Task ID:", taskId);
-        console.log("Source List ID:", sourceListId);
-        console.log("Destination List ID:", destinationListId);
 
         const updatedLists = [...lists];
 
@@ -78,9 +76,15 @@ const Lists = ({
                                     <h1 className="font-bold py-3 text-center">
                                         {String(list.list).toLocaleUpperCase()}
                                     </h1>
-                                    <div onClick={() => setDotClick(p =>({...p,Dot1:!DotClick.Dot1}))} className="text-3xl cursor-pointer">
+                                    <div
+                                        onClick={() => toggleDotVisibility(`list-${list._id}`)}
+                                        className="text-3xl cursor-pointer"
+                                    >
                                         ...
-                                    </div>  {DotClick.Dot1&&  <Dot id={list._id} type="Task" />}
+                                    </div>
+                                    {dotVisibility[`list-${list._id}`] && (
+                                        <Dot id={list._id} key={list._id} type="Task" />
+                                    )}
                                 </div>
                                 <ul>
                                     {list.tasks.map((task: any, taskIndex: number) => (
@@ -101,9 +105,24 @@ const Lists = ({
                                                     className={` my-1 flex relative font-bold items-end justify-between px-3 text-white`}
                                                 >
                                                     <LI task={task} />
-                                                    <div onClick={() => setDotClick(p => ({ ...p, Dot2: !DotClick.Dot2 }))} className="text-3xl cursor-pointer">
+                                                    <div
+                                                        onClick={() =>
+                                                            toggleDotVisibility(`task-${task._id}`)
+                                                        }
+                                                        className="text-3xl cursor-pointer"
+                                                    >
                                                         ...
-                                                    </div>  {DotClick.Dot2 && <Dot id={task._id} color={task.Color} name={task.title} type="List" />}  </li>
+                                                    </div>
+                                                    {dotVisibility[`task-${task._id}`] && (
+                                                        <Dot
+                                                            key={task._id}
+                                                            id={task._id}
+                                                            color={task.Color}
+                                                            name={task.title}
+                                                            type="List"
+                                                        />
+                                                    )}
+                                                </li>
                                             )}
                                         </Draggable>
                                     ))}

@@ -10,6 +10,9 @@ import { Profile } from '../controllers/Profile';
 import { UpdateProfile } from '../controllers/UpdateProfile';
 import { TaskApi } from '../controllers/TaskApi';
 import { TaskFile } from '../controllers/taskFile';
+import { Timmer } from '../controllers/Timmer';
+import { Table } from '../controllers/Table';
+import { Dashboard1 } from '../controllers/Dashboard1';
 
 
 export const Router=express.Router();
@@ -18,10 +21,15 @@ export const Router=express.Router();
 //@ts-ignore
 Router.get('/Dashboard', Dashboard)
 //@ts-ignore
+Router.get('/Dashboard1', Dashboard1)
+//@ts-ignore
+Router.get('/Table', Table)
+//@ts-ignore
 Router.get('/Profile', Profile)
 Router.post('/TaskFile', TaskFile)
 //@ts-ignore
 Router.post('/TaskApi', TaskApi)
+Router.post('/Timmer',Timmer)
 //@ts-ignore
 Router.post('/Login', Login) 
 //@ts-ignore
