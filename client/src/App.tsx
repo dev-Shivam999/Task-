@@ -7,6 +7,7 @@ import Edits from "./pages/Edits";
 import Payment from "./pages/Payment";
 import Table from "./pages/Table";
 import First from "./components/first";
+import Graph from "./components/Graph";
 
 
 
@@ -16,17 +17,29 @@ const App = () => {
     
 
       <Routes>
+
         <Route path="/" element={<Home/>}>
-        <Route index element={<First/>} />
-        <Route path="Table" element={<Table/>} />
+
+           <Route path="" element={<First/>} />
+
+           <Route path="Table" element={<Table/>} />
+
+           <Route path="Graph" element={<Graph />} />
       
         </Route>
+
         <Route path="/Login" element={<Login/>}/>
+
         <Route path="/Sign" element={<Sign/>}/>
+
         <Route path="/Profile" element={<Profile/>}/>
+
         <Route path="/Payment" element={<Payment/>}/>
+
         <Route path="/Table" element={<Table/>}/>
+
         <Route path="/Edits/:id" element={<Edits/>}/>
+
       </Routes>
       
  

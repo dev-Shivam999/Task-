@@ -13,6 +13,7 @@ import { TaskFile } from '../controllers/taskFile';
 import { Timmer } from '../controllers/Timmer';
 import { Table } from '../controllers/Table';
 import { Dashboard1 } from '../controllers/Dashboard1';
+import { Graph } from '../controllers/Graph';
 
 
 export const Router=express.Router();
@@ -26,6 +27,8 @@ Router.get('/Dashboard1', Dashboard1)
 Router.get('/Table', Table)
 //@ts-ignore
 Router.get('/Profile', Profile)
+//@ts-ignore
+Router.get('/Graph', Graph)
 Router.post('/TaskFile', TaskFile)
 //@ts-ignore
 Router.post('/TaskApi', TaskApi)

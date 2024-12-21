@@ -25,6 +25,7 @@ export const Sign = async (req: Request, res: Response) => {
                     httpOnly: true,
                     sameSite: "strict",
                     secure: true,
+                    maxAge:24*3600000
                 })
                 .status(200)
                 .json({ success: true, message: "User created successfully" });

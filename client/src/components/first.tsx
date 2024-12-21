@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Lists from './Lists';
 import ListAdd from './ListAdd';
 import { useSelector } from 'react-redux';
@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router';
 const First = () => {
     const [user, setUser] = useState<UserType>();
     const [lists, setLists] = useState<any[]>([]);
-    const [Time, setTime] = useState()
 
     const navigate = useNavigate();
 
@@ -30,7 +29,6 @@ const First = () => {
 
             }
             setUser(data.data.user);
-            setTime(data.data.Time);
             setLists(data.data.lists);
         } catch (error) {
             console.log(error);
