@@ -21,7 +21,7 @@ const UserLogin = new mongoose.Schema(
         },
         Color:{
             type: String,
-            default:"black"
+            default:"#8d1052"
         }
         ,
         Timer:{
@@ -44,7 +44,7 @@ const List = new mongoose.Schema(
         },
         Color: {
             type: String,
-            default: "yellow",
+            default: "black",
         },
         list: {
             type: String,
@@ -64,7 +64,7 @@ const Task = new mongoose.Schema(
         },
         Color: {
             type: String,
-            default: "black"
+            default: "#141313"
         },
         title: {
             type: String,

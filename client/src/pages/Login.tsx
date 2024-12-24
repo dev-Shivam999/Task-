@@ -2,50 +2,81 @@ import axios from "axios";
 import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-
 const Login = () => {
+    const navigate = useNavigate();
+    const email = useRef<HTMLInputElement>(null);
+    const password = useRef<HTMLInputElement>(null);
 
-    const navigate = useNavigate()
-    const email = useRef<HTMLInputElement>(null)
-    const password = useRef<HTMLInputElement>(null)
     const Api = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            if ( email.current?.value != "" && password.current?.value != "") {
+            if (email.current?.value !== "" && password.current?.value !== "") {
+                const { data } = await axios.post(
+                    `${import.meta.env.VITE_API}Login`,
+                    {
+                        email: email.current?.value,
+                        password: password.current?.value,
+                    },
+                    { withCredentials: true }
+                );
 
-
-                const { data } = await axios.post(`${import.meta.env.VITE_API}Login`, {
-                    email: email.current?.value,
-                    password: password.current?.value,
-                }, {
-                    withCredentials: true
-                });
                 if (data.success) {
-                    navigate('/');
-                }else{
-                    alert(data.message)
+                    navigate("/");
+                } else {
+                    alert(data.message);
                 }
             } else {
-                alert("fill all the fields")
+                alert("Please fill in all the fields.");
             }
         } catch (error) {
             console.error(error);
-            alert("Failed to sign up. Please try again.");
+            alert("Login failed. Please try again.");
         }
-    }
+    };
+
     return (
-        <div>
-            <div className=" text-center">
-                <h1 className="font-bold text-5xl my-4">Login</h1>
-                <Link to={'/sign'} className="text-purple-400">you not have an account</Link>
-
+        <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+            <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-md">
+                <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
+                    Log In to Trello
+                </h1>
+                <form className="space-y-4" onSubmit={Api}>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">
+                            Email
+                        </label>
+                        <input
+                            type="email"
+                            placeholder="Enter your email"
+                            className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            ref={email}
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">
+                            Password
+                        </label>
+                        <input
+                            type="password"
+                            placeholder="Enter your password"
+                            className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            ref={password}
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors"
+                    >
+                        Log In
+                    </button>
+                </form>
+                <p className="mt-6 text-center text-sm text-gray-600">
+                    Don’t have an account?{" "}
+                    <Link to="/sign" className="text-blue-500 hover:underline">
+                        Sign up
+                    </Link>
+                </p>
             </div>
-            <form className="border-2 border-zinc-600 flex w-1/2 px-3 my-3 gap-y-4 py-3 mx-auto flex-col" onSubmit={(e) => Api(e)}>
-                <input placeholder="Enter your password" type="password" className="border-2 border-zinc-950 p-2 rounded-lg" ref={password} />
-                <input placeholder="Enter your email" type="email" className="border-2 border-zinc-950 p-2 rounded-lg" ref={email} />
-                <button className="bg-black text-white w-max rounded-md p-2 px-4 mx-auto">Login</button>
-            </form>
-
         </div>
     );
 };

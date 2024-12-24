@@ -24,7 +24,7 @@ const dispatch=useDispatch()
         <div className='flex gap-1 items-center'>
             {
                 AddTask && <form className='ps-2' onSubmit={(e) => TaskApi(e, p._id)} >
-                    <input type="text" ref={TaskRef} placeholder="name" />
+                    <input type="text" ref={TaskRef} className='bg-transparent' placeholder="name" />
                 </form>
             }
             <button onClick={() => SetAddTask(true)} className='font-bold px-3 bg-slate-50 text-black rounded-md p-1'> Add</button>

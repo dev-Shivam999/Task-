@@ -4,7 +4,8 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 
 const Home = () => {
     const [user, setUser] = useState<UserType>();
-    const [Time, setTime] = useState()
+    const [Time, setTime] = useState<number | undefined>();
+    const [sideShow, setSideShow] = useState<boolean>(false);
 
     const navigate = useNavigate();
 
@@ -15,79 +16,92 @@ const Home = () => {
             });
 
             if (!data.success) {
-                if (data.message !=="Time Over") {
-                    
+                if (data.message !== "Time Over") {
                     navigate("/Login");
-                }
-                else{
+                } else {
                     alert(data.message);
                     navigate("/Payment");
                 }
-
             }
+
             setUser(data.data.user);
             setTime(data.data.Time);
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
-
 
     useEffect(() => {
         Api();
     }, []);
-    const [sideShow, setSideShow] = useState<boolean>(false)
-
-
 
     return (
-        <div style={{ background: `${user?.Color}` }} className="flex  w-full min-h-screen mt-[-1px]">
+        <div
+            style={{ backgroundColor: `${user?.Color || "#f4f4f4"}` }}
+            className="flex min-h-screen"
+        >
             <div>
-                <div className="  relative" >
-                    {
-                        sideShow && <div className=" w-72 h-screen z-40 bg-zinc-900 border-2 absolute top-0 left-0">
-
-
+                <div className="relative">
+                    {sideShow && (
+                        <div className="w-72 h-screen bg-zinc-900 text-white border-r-2 absolute top-0 left-0 z-40 shadow-lg">
+                            <div className="p-4">
+                                <h2 className="text-lg font-bold">Sidebar</h2>
+                                <p className="text-sm mt-2">Add your sidebar content here.</p>
+                            </div>
                         </div>
-                    }
-                    <div className="text-white cursor-pointer mix-blend-difference absolute z-50 top-3" style={{ right: sideShow ? "-299px" : "-20px" }} onClick={() => setSideShow(p => !p)}>
-                        {
-                            sideShow ? ">" : "<"
-                        }
-                    </div>
+                    )}
+                    <button
+                        className={`text-white cursor-pointer absolute z-50 top-3 transition-transform ${sideShow ? "translate-x-[300px]" : "translate-x-0"
+                            }`}
+                        onClick={() => setSideShow((prev) => !prev)}
+                    >
+                        {sideShow ? ">" : "<"}
+                    </button>
                 </div>
             </div>
-            <div className="w-full">
-                <div className="px-2 mb-6 text-white">
-                    <h1 className="font-bold text-5xl text-center my-4">DashBoard</h1>
-                    <hr />
-                    <div className="flex justify-between w-full px-3">
-                        <div>Name: {user?.name}</div>
 
-                        <div className="flex gap-3 items-center">
-                            <Link to={'Graph'} className="bg-white text-black mix-blend-difference px-3 py-1 rounded-md">
-                               Graph
+            <div className="flex-grow">
+                <div className="p-4 px-0 text-gray-900">
+                    <h1 className="font-bold text-5xl text-center my-4 text-white">
+                         Trello Dashboard
+                    </h1>
+                    <div className="flex py-7 justify-between items-center bg-[#00000078] text-white px-4">
+                        <div className="text-lg">
+                            <span className="font-semibold">Name:</span> {user?.name}
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <Link
+                                to={"Graph"}
+                                className="bg-white text-black px-3 py-1 rounded-md hover:bg-gray-200 transition"
+                            >
+                                Graph
                             </Link>
-                            <Link to={'Table'} className="bg-white text-black mix-blend-difference px-3 py-1 rounded-md">
-                               Table
+                            <Link
+                                to={"Table"}
+                                className="bg-white text-black px-3 py-1 rounded-md hover:bg-gray-200 transition"
+                            >
+                                Table
                             </Link>
-                            <Link to={'/'} className="bg-white text-black mix-blend-difference px-3 py-1 rounded-md">
-                                {
-                                    Time
-                                } days
+                            <Link
+                                to={"/"}
+                                className="bg-white text-black px-3 py-1 rounded-md hover:bg-gray-200 transition"
+                            >
+                                {Time} days
                             </Link>
-                            <Link to={'/Profile'} className="bg-white text-black w-6 h-6 flex justify-center items-center rounded-full">
-                                {user?.name[0]?.toString().toUpperCase()}
+                            <Link
+                                to={"/Profile"}
+                                className="bg-white text-black w-10 h-10 flex justify-center items-center rounded-full font-bold hover:bg-gray-200 transition"
+                            >
+                                {user?.name?.[0]?.toUpperCase()}
                             </Link>
                         </div>
                     </div>
-                    <hr />
                 </div>
 
-                <Outlet/>
-             
+                <div className="p-4 px-0">
+                    <Outlet />
+                </div>
             </div>
-
         </div>
     );
 };

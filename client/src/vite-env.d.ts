@@ -7,3 +7,20 @@ interface UserType{
     Color:String,
     Timer: Number
 }
+
+interface Task {
+    _id: string;
+    title: string;
+}
+
+interface List {
+    list: string;
+    tasks: Task[];
+}
+
+interface Time {
+    TaskId: string;
+    StartTime: string;
+    EndTime: string;
+    Reminder: string;
+}

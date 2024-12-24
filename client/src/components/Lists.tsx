@@ -12,14 +12,9 @@ const Lists = ({
     lists: any[];
     setLists: (updatedLists: any[]) => void;
 }) => {
-    const [dotVisibility, setDotVisibility] = useState<Record<string, boolean>>({});
+    const [dotVisibility, setDotVisibility] = useState<string>();
 
-    const toggleDotVisibility = (id: string) => {
-        setDotVisibility((prev) => ({
-            ...prev,
-            [id]: !prev[id],
-        }));
-    };
+  
 
     const handleDragEnd = (result: any) => {
         const { source, destination } = result;
@@ -62,7 +57,7 @@ const Lists = ({
 
     return (
         <DragDropContext onDragEnd={handleDragEnd}>
-            <div className="flex gap-3 flex-wrap">
+            <div className="flex gap-5 justify-start p-4">
                 {lists.map((list, listIndex) => (
                     <Droppable droppableId={`${listIndex}`} key={listIndex}>
                         {(provided) => (
@@ -70,23 +65,21 @@ const Lists = ({
                                 {...provided.droppableProps}
                                 ref={provided.innerRef}
                                 style={{ backgroundColor: list.Color }}
-                                className="rounded-md py-3 text-black w-[300px] mx-2 border-2"
+                                className="rounded-lg shadow-lg py-4 px-3 text-white w-72 border border-gray-200"
                             >
-                                <div className="flex items-baseline justify-between px-3 relative">
-                                    <h1 className="font-bold py-3 text-center">
-                                        {String(list.list).toLocaleUpperCase()}
-                                    </h1>
-                                    <div
-                                        onClick={() => toggleDotVisibility(`list-${list._id}`)}
-                                        className="text-3xl cursor-pointer"
+                                <div className="flex relative items-center justify-between mb-3">
+                                    <h2 className="text-lg font-bold">{list.list.toUpperCase()}</h2>
+                                    <button
+                                        onClick={() => setDotVisibility(list._id)}
+                                        className="text-xl font-bold cursor-pointer"
                                     >
                                         ...
-                                    </div>
-                                    {dotVisibility[`list-${list._id}`] && (
+                                    </button>
+                                    {dotVisibility==list._id && (
                                         <Dot id={list._id} key={list._id} type="Task" />
                                     )}
                                 </div>
-                                <ul>
+                                <ul className="space-y-2">
                                     {list.tasks.map((task: any, taskIndex: number) => (
                                         <Draggable
                                             draggableId={`${task._id}`}
@@ -102,18 +95,18 @@ const Lists = ({
                                                         ...provided.draggableProps.style,
                                                         backgroundColor: task.Color,
                                                     }}
-                                                    className={` my-1 flex relative font-bold items-end justify-between px-3 text-white`}
+                                                    className="p-3 rounded-lg flex justify-between items-center shadow-md cursor-pointer"
                                                 >
                                                     <LI task={task} />
-                                                    <div
+                                                    <button
                                                         onClick={() =>
-                                                            toggleDotVisibility(`task-${task._id}`)
+                                                            setDotVisibility(task._id)
                                                         }
-                                                        className="text-3xl cursor-pointer"
+                                                        className="text-xl font-bold cursor-pointer"
                                                     >
                                                         ...
-                                                    </div>
-                                                    {dotVisibility[`task-${task._id}`] && (
+                                                    </button>
+                                                    {dotVisibility==task._id&& (
                                                         <Dot
                                                             key={task._id}
                                                             id={task._id}

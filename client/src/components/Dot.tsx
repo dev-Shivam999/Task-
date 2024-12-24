@@ -123,7 +123,7 @@ const Dot: FC<{ id: string, type: string, color?: string, name?: string }> = ({ 
 
             {
                 show && type != "List" ?
-                    <div className="absolute right-[-25%] z-50 -translate-x-1/4">
+                    <div className="absolute -right-20  z-50">
                         {
                             arr.map((p) => <Color click={Handle1} Color={p} />)
                         }

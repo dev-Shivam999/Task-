@@ -41,10 +41,10 @@ const First = () => {
         Api();
     }, [User]);
     return (
-        <>
+        <div className='flex'>
             <Lists lists={lists} setLists={setLists} />
             <ListAdd user={user} />   
-        </>
+        </div>
     );
 };
 
