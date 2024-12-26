@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UserSC, UserSchema } from "../models/models";
+import { SettingSchema, UserSC, UserSchema } from "../models/models";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -16,7 +16,9 @@ export const Sign = async (req: Request, res: Response) => {
             const hash = bcrypt.hashSync(password, 10);
             
             const user: UserSC = await UserSchema.create({ name, email, password: hash });
-            
+            await SettingSchema.create({
+                userId: user?._id,
+            })
             const jwtToken = jwt.sign(String(user._id), "lol");
 
             

@@ -59,15 +59,17 @@ const Table = () => {
                                                 </>: "N/A"}
                                             </td>
                                             <td className="border-2 text-center">
-                                                {task.timer ? task.timer.EndTime : "N/A"}
+                                                {task.timer ? <>
+                                                    {new Date(task.timer.EndTime).getDate()}/
+                                                    {new Date(task.timer.EndTime).getMonth()}/
+                                                    {new Date(task.timer.EndTime).getFullYear()}
+                                                </> : "N/A"}
                                             </td>
                                             <td className="border-2 text-center">
                                                 {task.timer ? task.timer.Reminder : "N/A"}
                                             </td>
                                             <td className="border-2 text-center">
-                                                    {
-                                                        console.log(task.attachment)                                                        
-                                                    }
+                                                  
                                                 {task.attachment ? (
                                                     <a href={task.attachment.
                                                         FileLink} target="_blank" rel="noopener noreferrer">

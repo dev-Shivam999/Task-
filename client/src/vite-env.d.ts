@@ -6,6 +6,7 @@ interface UserType{
     _id:String;
     Color:String,
     Timer: Number
+    
 }
 
 interface Task {

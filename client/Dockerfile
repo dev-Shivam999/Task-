@@ -8,6 +8,7 @@ COPY ./packages.json .
 
 RUN npm i 
 
+COPY . .
 
 
 CMD [ "npm" ,"run","dev" ]

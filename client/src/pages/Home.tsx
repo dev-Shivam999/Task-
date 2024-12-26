@@ -7,6 +7,7 @@ const Home = () => {
     const [Time, setTime] = useState<number | undefined>();
     const [sideShow, setSideShow] = useState<boolean>(false);
 
+    const [ShowSettings, setShowSettings] = useState<boolean>(false)
     const navigate = useNavigate();
 
     const Api = async () => {
@@ -63,7 +64,7 @@ const Home = () => {
             <div className="flex-grow">
                 <div className="p-4 px-0 text-gray-900">
                     <h1 className="font-bold text-5xl text-center my-4 text-white">
-                         Trello Dashboard
+                        Trello Dashboard
                     </h1>
                     <div className="flex py-7 justify-between items-center bg-[#00000078] text-white px-4">
                         <div className="text-lg">
@@ -75,6 +76,12 @@ const Home = () => {
                                 className="bg-white text-black px-3 py-1 rounded-md hover:bg-gray-200 transition"
                             >
                                 Graph
+                            </Link>
+                            <Link
+                                to={"Calender"}
+                                className="bg-white text-black px-3 py-1 rounded-md hover:bg-gray-200 transition"
+                            >
+                                Calender
                             </Link>
                             <Link
                                 to={"Table"}
@@ -94,9 +101,35 @@ const Home = () => {
                             >
                                 {user?.name?.[0]?.toUpperCase()}
                             </Link>
+
+                            <div onClick={()=>setShowSettings(p=>!p)} className="bg-transparent cursor-pointer">
+                                {ShowSettings?">":"<"}
+                             
+                            </div>
                         </div>
+
                     </div>
                 </div>
+                {
+                    ShowSettings && <div className="flex items-end text-white px-6 flex-col gap-4">
+                        <div>
+                            <label htmlFor="DashBoard">DasBoard</label>
+                            <input type="checkbox" name="DashBoard" defaultChecked />
+                        </div>
+                        <div>
+                            <label htmlFor="Table">Table</label>
+                            <input type="checkbox" name="Table" />
+                        </div>
+                        <div>
+                            <label htmlFor="Graph">Graph</label>
+                            <input type="checkbox" name="Graph" />
+                        </div>
+                        <div>
+                            <label htmlFor="Calender">Calender</label>
+                            <input type="checkbox" name="Calender" />
+                        </div>
+                    </div>
+                }
 
                 <div className=" h-svh w-[99vw] overflow-auto ">
                     <Outlet />

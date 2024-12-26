@@ -6,8 +6,10 @@ export const Timmer = async (req: Request, res: Response) => {
         GetHours,
         EndDate,
         todatDate } = await req.body
+        
+        
     await TimerSchema.create({
-        EndTime: `${EndDate.day}/${EndDate.month}/${EndDate.year}`,
+        EndTime: EndDate,
         Reminder: GetHours,
         StartTime: todatDate,
         TaskId: id

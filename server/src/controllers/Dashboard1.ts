@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import {  UserSchema } from "../models/models";
+import {  SettingSchema, UserSchema } from "../models/models";
 
 export const Dashboard1 = async (req: Request, res: Response) => {
     try {
@@ -32,6 +32,7 @@ export const Dashboard1 = async (req: Request, res: Response) => {
         const date = Date.now();
         const time = Math.ceil((userInfo.Timer - date) / (1000 * 60 * 60 * 24))
 
+        const Show = await SettingSchema.findOne({ userId: userId })
 
         if (time > 0) {
 
@@ -44,7 +45,8 @@ export const Dashboard1 = async (req: Request, res: Response) => {
                 data: {
                     user: userInfo,
                     
-                    Time: time
+                    Time: time,
+                    show:Show
                 },
             });
         } else {

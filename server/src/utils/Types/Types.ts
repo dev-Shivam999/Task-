@@ -30,3 +30,8 @@ export interface AttachFileType{
     TaskId: string
     FilePath: string 
 }
+
+export interface SettingType{
+    userId: string
+    
+}

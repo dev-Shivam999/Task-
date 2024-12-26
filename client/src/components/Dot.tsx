@@ -1,25 +1,24 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import Color from "./Color";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { setList } from "../store/data";
+import DatePicker from "react-datepicker";
 
+import "react-datepicker/dist/react-datepicker.css";
+import Firma from "./Ifrema";
 
 const Dot: FC<{ id: string, type: string, color?: string, name?: string }> = ({ id, type, color, name }) => {
     const [show, setShow] = useState<boolean>(true)
-    const [time, setTime] = useState(false)
+    const fileRef = useRef<HTMLInputElement | null>(null)
+    const [EndDate, setEndDate] = useState<Date | null>(null);
+    const [time, setTime] = useState<boolean>(false)
+    const [Location, setLocation] = useState<boolean>(false)
+
     const [todatDate, setTodayDate] = useState<Date | null>(null)
 
     const [GetHours, setHours] = useState("")
-    const [EndDate, setEndDate] = useState<{
-        month: number | undefined,
-        year: number | undefined,
-        day: number | undefined
-    }>({
-        month: undefined,
-        year: undefined,
-        day: undefined
-    })
+
     const [img, setImg] = useState<string | null>(null)
     const dispatch = useDispatch()
 
@@ -83,24 +82,18 @@ const Dot: FC<{ id: string, type: string, color?: string, name?: string }> = ({ 
             //@ts-ignore
             setTime(p => !p)
 
-            setEndDate({
-                day: Number(String(data.data.
-                    EndTime
-                ).split('/')[0]),
-                month: Number(String(data.data.
-                    EndTime
-                ).split('/')[1]),
-                year: Number(String(data.data.
-                    EndTime
-                ).split('/')[2])
-            })
+
             //@ts-ignore
             setHours(Number(data.data.Reminder))
             setTodayDate(new Date(data.data.StartTime))
+            setEndDate(new Date(data.data.
+                EndTime))
+
+            setImg(data.data2.FileName)
 
         }
         if (data.data2) {
-            
+
         }
 
 
@@ -109,7 +102,7 @@ const Dot: FC<{ id: string, type: string, color?: string, name?: string }> = ({ 
     const Timmer = async () => {
         await axios.post(`${import.meta.env.VITE_API}Timmer`, {
             id,
-            GetHours, EndDate, todatDate
+            GetHours, todatDate, EndDate
         })
 
     }
@@ -128,12 +121,12 @@ const Dot: FC<{ id: string, type: string, color?: string, name?: string }> = ({ 
                             arr.map((p) => <Color click={Handle1} Color={p} />)
                         }
                     </div> : show && type == "List" &&
-                    <div className="absolute left-8 z-50 top-1/2 w-[800px] bg-zinc-800  h-[500px] ">
-                        <div  >
-                            <div style={{ backgroundColor: color }} className="flex justify-between text-white  py-5 rounded-sm w-full px-3" >
-                                <div className="text-white">
+                    <div style={{ backgroundColor: color }} className="absolute left-8 z-50 top-6 w-[90%] h-[90vh] rounded-xl overflow-hidden bg-zinc-800  ">
+                        <div   >
+                            <div className="flex justify-between text-white  py-5 rounded-sm w-full px-3" >
+                                <div className="text-white font-bold">
                                     {
-                                        name
+                                        name?.toLocaleUpperCase()
                                     }
 
                                 </div>
@@ -142,80 +135,66 @@ const Dot: FC<{ id: string, type: string, color?: string, name?: string }> = ({ 
 
                                 </div>
                             </div>
-                            <div className="w-3/6 flex flex-wrap px-3">
-                                {
-                                    arr.map((p) => <Color click={Handle1} Color={p} />)
-                                }
-                            </div>
-                            <div className="px-3">
-                                <button onClick={() => setTime(p => !p)} className=" bg-white p-3 rounded-md text-black w-max mt-4  mix-blend-difference">
-
-                                    Date
-                                </button>
-                                {
-                                    time && <div className="flex items-center gap-2">
-                                        StartDate  <div onClick={() => setTodayDate(new Date())} className="bg-black rounded-md p-3 w-max">{
-                                            todatDate && <>
-                                                {todatDate.getDate()}
-                                                /{
-                                                    todatDate.getMonth()
-                                                }/{
-                                                    todatDate.getFullYear()
-                                                }
-
-                                            </>
-                                        }</div>
-
-
-                                        EndDate <div onClick={() => setEndDate({ day: todatDate?.getDate(), month: todatDate?.getMonth(), year: todatDate?.getFullYear() })} className="bg-black rounded-md p-3 w-max">
-
+                            <div className="flex justify-between px-3">
+                                <div>
+                                    {
+                                        //@ts-ignore
+                                        img && <div
+                                            className=" bg-slate-700 p-3 my-5 rounded-md">
                                             {
-                                                EndDate.day && <>
-                                                    <input type="number" className="bg-transparent text-white w-9" value={EndDate.day} onChange={(e) => setEndDate(p => ({ ...p, day: Number(e.target.value) }))} />/
-                                                    <input type="number" className="bg-transparent text-white w-9" value={EndDate.month} onChange={(e) => setEndDate(p => ({ ...p, month: Number(e.target.value) }))} />
-                                                    /
-                                                    <input type="number" className="bg-transparent text-white w-14" value={EndDate.year} onChange={(e) => setEndDate(p => ({ ...p, year: Number(e.target.value) }))} />
-
-                                                </>
+                                                img
                                             }
                                         </div>
+                                    }
 
-                                        {EndDate.day && time &&
-                                            <div className="bg-black rounded-md p-3">
-                                                Remainder
-                                                <input type="number" value={GetHours} onChange={(e) => setHours(e.target.value)} className=" mx-2 px-1 w-16 bg-transparent text-white" placeholder="enter the hours" />
-                                                Hours
-
+                                    {
+                                            Location && <div
+                                                className=" bg-slate-700 p-3 my-5 rounded-md">
+                                                <Firma/>
                                             </div>
-                                        }
-                                    </div>
+                                    }
+                                </div>
+                                <div className=" flex justify-end ">
+                                    <div className="px-3">
 
-                                }
 
-                                {
-                                    time && GetHours && EndDate.day && <button onClick={() => Timmer()} className=" mx-auto block  bg-white p-3 rounded-md text-black w-max mt-10  mix-blend-difference">
+                                        <div>
+                                            <div className=" bg-slate-700 p-3 my-5 rounded-md">
 
-                                        save
-                                    </button>
-                                }
-
-                                <div>
-                                    <div>
+                                                Start Date  <DatePicker selected={todatDate} className="bg-transparent" onChange={(date) => setTodayDate(date || new Date())} />
+                                            </div>
+                                            <div className=" bg-slate-700 p-3 my-5 rounded-md">
+                                                End Date  <DatePicker selected={EndDate} className="bg-transparent" onChange={(date) => { setEndDate(date || new Date()), setTime(true) }} />
+                                            </div>   </div>
                                         {
-                                            //@ts-ignore
-                                            img && <div
-                                                className=" bg-white p-3 rounded-md text-black w-max mt-4  mix-blend-difference">
-                                                {
-                                                    img
-                                                }
+                                            todatDate && EndDate && <div>
+                                                <input type="text" value={GetHours} onChange={(e) => setHours(e.target.value)} placeholder="enter the ex hour " className="bg-slate-700 p-3 my-5 rounded-md" />
                                             </div>
                                         }
-                                        <input type="file" onChange={(e) => file(e)} />
+
+                                        {
+                                            todatDate && EndDate && GetHours.length > 0 && time && <button onClick={() => Timmer()} className=" mx-auto block  bg-white p-3 rounded-md text-black w-max mt-10  mix-blend-difference">
+
+                                                save
+                                            </button>
+                                        }
+                                            <div onClick={() => setLocation(true)} className=" bg-slate-700 p-3 my-5 rounded-md">
+                                            location
+                                        </div>
+                                        <div>
+                                            <div>
+
+                                                <div className=" bg-slate-700 p-3 my-5 rounded-md" onClick={() => fileRef.current?.click()}>
+                                                    Attachment
+                                                    <input type="file" className="hidden" ref={fileRef} onChange={(e) => file(e)} />
+                                                </div>
+
+                                            </div>
+                                        </div>
+
 
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>

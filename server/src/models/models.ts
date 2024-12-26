@@ -1,5 +1,7 @@
 import mongoose, { Model } from "mongoose";
 import { AttachFileType, ListType, TaskType, TimerType, User } from "../utils/Types/Types";
+import { Dashboard } from "../controllers/Dashboard";
+import { Calendar } from "../controllers/Calender";
 
 
 export type UserSC = User & mongoose.Document;
@@ -54,6 +56,30 @@ const List = new mongoose.Schema(
     { timestamps: true }
 );
 
+
+const Setting=new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "UserSchema",
+        required: true,
+    },
+    Dashboard:{
+        type:Boolean,
+        default:true
+    },
+    Table:{
+        type:Boolean,
+        default:false
+    },
+    Graph:{
+        type:Boolean,
+        default:false
+    },
+    Calendar:{
+        type:Boolean,
+        default:false
+    }
+})
 
 const Task = new mongoose.Schema(
     {
@@ -122,3 +148,4 @@ export const ListSchema: Model<ListType> = mongoose.model<ListType>("ListSchema"
 export const TaskSchema: Model<TaskType> = mongoose.model<TaskType>("TaskSchema", Task);
 export const TimerSchema: Model<TimerType> = mongoose.model<TimerType>("TimerSchema", Timer);
 export const AttachFileSchema: Model<AttachFileType> = mongoose.model<AttachFileType>("AttachFileSchema", AttachFile);
+export const SettingSchema = mongoose.model("SettingSchema", Setting);

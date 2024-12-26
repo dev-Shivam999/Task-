@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UserSC, UserSchema } from "../models/models";
+import { SettingSchema, UserSC, UserSchema } from "../models/models";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 

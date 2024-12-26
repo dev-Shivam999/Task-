@@ -26,6 +26,7 @@ export const Dashboard = async (req: Request, res: Response) => {
         }
 
         const userInfo = await UserSchema.findById(userId);
+
         if (!userInfo) {
             return res.json({ success: false, message: "User not found" });
         }
