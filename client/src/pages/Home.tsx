@@ -38,7 +38,7 @@ const Home = () => {
     return (
         <div
             style={{ backgroundColor: `${user?.Color || "#f4f4f4"}` }}
-            className="flex min-h-screen"
+            className="flex min-h-screen "
         >
             <div>
                 <div className="relative">
@@ -98,7 +98,7 @@ const Home = () => {
                     </div>
                 </div>
 
-                <div className="p-4 px-0">
+                <div className=" h-svh w-[99vw] overflow-auto ">
                     <Outlet />
                 </div>
             </div>

@@ -14,6 +14,7 @@ import { Timmer } from '../controllers/Timmer';
 import { Table } from '../controllers/Table';
 import { Dashboard1 } from '../controllers/Dashboard1';
 import { Graph } from '../controllers/Graph';
+import {Calendar } from '../controllers/Calender';
 
 
 export const Router=express.Router();
@@ -21,6 +22,8 @@ export const Router=express.Router();
 
 //@ts-ignore
 Router.get('/Dashboard', Dashboard)
+//@ts-ignore
+Router.get('/Calender', Calendar)
 //@ts-ignore
 Router.get('/Dashboard1', Dashboard1)
 //@ts-ignore

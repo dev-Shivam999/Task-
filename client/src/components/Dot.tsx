@@ -63,7 +63,7 @@ const Dot: FC<{ id: string, type: string, color?: string, name?: string }> = ({ 
             await axios.post(`${import.meta.env.VITE_API}TaskFile`, {
                 id: id,
                 Url: data2.secure_url,
-                name: img
+                name: e.target.files[0].name
             })
         } catch (error) {
             setImg("error")
@@ -128,7 +128,7 @@ const Dot: FC<{ id: string, type: string, color?: string, name?: string }> = ({ 
                             arr.map((p) => <Color click={Handle1} Color={p} />)
                         }
                     </div> : show && type == "List" &&
-                    <div className="absolute z-50 top-1/2 w-[800px] bg-zinc-800  h-[500px] ">
+                    <div className="absolute left-8 z-50 top-1/2 w-[800px] bg-zinc-800  h-[500px] ">
                         <div  >
                             <div style={{ backgroundColor: color }} className="flex justify-between text-white  py-5 rounded-sm w-full px-3" >
                                 <div className="text-white">

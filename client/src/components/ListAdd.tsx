@@ -24,7 +24,7 @@ const ListAdd = ({ user }: { user: any }) => {
 
     }
     return (
-        <div className='bg-black py-4 w-[300px] rounded-md flex items-center flex-col my-5  mx-2 border-2'>
+        <div className='bg-black p-4 w-[300px] rounded-md flex items-center flex-col my-5  mx-2 border-2'>
             <button onClick={() => SetAddList(p=>!p)} className='w-32 h-32 rounded-full bg-slate-100'>AddList</button>
             {
                 AddList &&

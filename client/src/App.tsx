@@ -8,6 +8,7 @@ import Payment from "./pages/Payment";
 import Table from "./pages/Table";
 import First from "./components/first";
 import Graph from "./components/Graph";
+import MyCalendar from "./pages/Cal";
 
 
 
@@ -26,6 +27,7 @@ const App = () => {
            <Route path="Table" element={<Table/>} />
 
            <Route path="Graph" element={<Graph />} />
+           <Route path="Calender" element={<MyCalendar />} />
       
         </Route>
 
