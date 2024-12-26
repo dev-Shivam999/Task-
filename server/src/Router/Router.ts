@@ -15,6 +15,8 @@ import { Table } from '../controllers/Table';
 import { Dashboard1 } from '../controllers/Dashboard1';
 import { Graph } from '../controllers/Graph';
 import {Calendar } from '../controllers/Calender';
+import { ShowSettings } from '../controllers/ShowSetting';
+import { CoverImg } from '../controllers/CoverImg';
 
 
 export const Router=express.Router();
@@ -22,6 +24,10 @@ export const Router=express.Router();
 
 //@ts-ignore
 Router.get('/Dashboard', Dashboard)
+//@ts-ignore
+Router.post('/ShowSettings', ShowSettings)
+//@ts-ignore
+Router.post('/CoverImg', CoverImg)
 //@ts-ignore
 Router.get('/Calender', Calendar)
 //@ts-ignore

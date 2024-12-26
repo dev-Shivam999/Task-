@@ -21,16 +21,20 @@ const UserLogin = new mongoose.Schema(
             type: String,
             required: true,
         },
-        Color:{
+        Color: {
             type: String,
-            default:"#8d1052"
+            default: "#8d1052"
+        },
+        CoverImg: {
+            type: String,
+            default: ""
         }
         ,
-        Timer:{
-            type:Number,
-            default:Date.now() + 15 * 24 * 60 * 60 * 1000
-  
-            
+        Timer: {
+            type: Number,
+            default: Date.now() + 15 * 24 * 60 * 60 * 1000
+
+
         }
     },
     { timestamps: true }
@@ -57,27 +61,27 @@ const List = new mongoose.Schema(
 );
 
 
-const Setting=new mongoose.Schema({
+const Setting = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "UserSchema",
         required: true,
     },
-    Dashboard:{
-        type:Boolean,
-        default:true
+    Dashboard: {
+        type: Boolean,
+        default: true
     },
-    Table:{
-        type:Boolean,
-        default:false
+    Table: {
+        type: Boolean,
+        default: false
     },
-    Graph:{
-        type:Boolean,
-        default:false
+    Graph: {
+        type: Boolean,
+        default: false
     },
-    Calendar:{
-        type:Boolean,
-        default:false
+    Calendar: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -105,13 +109,13 @@ const Task = new mongoose.Schema(
             default: false,
         }
 
-       
+
     },
     { timestamps: true }
 );
 
-const Timer=new mongoose.Schema({
-    TaskId:{
+const Timer = new mongoose.Schema({
+    TaskId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "TaskSchema",
         required: true,
@@ -127,7 +131,7 @@ const Timer=new mongoose.Schema({
     }
 })
 
-const AttachFile =new mongoose.Schema({
+const AttachFile = new mongoose.Schema({
     TaskId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "TaskSchema",
@@ -138,7 +142,7 @@ const AttachFile =new mongoose.Schema({
 
     },
     FileName: {
-        type :String
+        type: String
     }
 
 })
