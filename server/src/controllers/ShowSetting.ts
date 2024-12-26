@@ -35,11 +35,21 @@ export const ShowSettings = async (req: Request, res: Response) => {
             Dashboard,
             Graph,
             Table } = await req.body
+        await SettingSchema.updateOne(
+                { userId: userInfo._id },
+                { $set: { Calendar: Calendar, Dashboard: Dashboard, Graph: Graph, Table: Table } }
+            );
+        console.log(Calendar,
+            Dashboard,
+            Graph,
+            Table);
+            
 
-        await SettingSchema.updateOne({
-            userId: userInfo._id
-        }, { $set: { Calendar: Calendar, Dashboard: Dashboard, Graph: Graph, Table: Table } })
-        res.json({ success: true })
+        
+
+            res.json({ success: true });
+     
+
 
     } catch (e) {
         console.log(e);

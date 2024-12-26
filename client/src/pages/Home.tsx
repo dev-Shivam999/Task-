@@ -60,6 +60,7 @@ const Home = () => {
         })
     }
     const CoverImgApi = async (e: string) => {
+        ShowTemplate(p=>!p)
         await axios.post(`${import.meta.env.VITE_API}CoverImg`,{
             img:e
         }, {
