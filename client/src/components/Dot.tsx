@@ -104,6 +104,7 @@ const Dot: FC<{ id: string, type: string, color?: string, name?: string }> = ({ 
             id,
             GetHours, todatDate, EndDate
         })
+        setTime(p=>!p)
 
     }
     useEffect(() => {
