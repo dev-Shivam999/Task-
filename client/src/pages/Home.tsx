@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import {  Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Template from "../components/Template";
 import Nav from "../components/Nav";
+import AddUser from "../components/AddUser";
 
 const Home = () => {
     const [user, setUser] = useState<UserType>();
@@ -59,15 +60,19 @@ const Home = () => {
             withCredentials: true
         })
     }
-   
+
 
 
     return (
         <div
             className="bg-zinc-800 text-white ">
-         
 
-<Template setUser={setUser}/>
+
+            <div className="flex py-5 gap-3 items-center">
+                <Template setUser={setUser} />
+                <AddUser />
+           </div>
+
 
             <div
                 style={{
@@ -91,7 +96,7 @@ const Home = () => {
                                     <div className="flex flex-col gap-4">
                                         <Nav Time={Time || 0} inShowSettings={inShowSettings} user={user} />
 
-                                        </div> </div>
+                                    </div> </div>
                             </div>
                         )}
                         <button
@@ -104,21 +109,21 @@ const Home = () => {
                 </div>
 
                 <div className="flex-grow">
-                    <div className="p-4 px-0 text-gray-900">
+                    <div className=" px-0 text-gray-900">
 
                         <div className="flex py-7 justify-between items-center bg-[#00000078] text-white px-4">
                             <div className="text-lg">
                                 <span className="font-semibold">Name:</span> {user?.name}
                             </div>
-                          
-                           <div className="flex gap-5">
+
+                            <div className="flex gap-5">
                                 <Nav Time={Time || 0} inShowSettings={inShowSettings} user={user} />
                                 <div
                                     onClick={() => setShowSettings((p) => !p)}
                                     className="bg-transparent cursor-pointer">
                                     {ShowSettings ? ">" : "<"}
                                 </div>
-                           </div>
+                            </div>
                         </div>
                     </div>
                     {ShowSettings && (

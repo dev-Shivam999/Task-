@@ -39,10 +39,7 @@ export const ShowSettings = async (req: Request, res: Response) => {
                 { userId: userInfo._id },
                 { $set: { Calendar: Calendar, Dashboard: Dashboard, Graph: Graph, Table: Table } }
             );
-        console.log(Calendar,
-            Dashboard,
-            Graph,
-            Table);
+      
             
 
         

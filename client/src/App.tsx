@@ -9,6 +9,7 @@ import Table from "./pages/Table";
 import First from "./components/first";
 import Graph from "./components/Graph";
 import MyCalendar from "./pages/Cal";
+import Refer from "./pages/Refer";
 
 
 
@@ -32,6 +33,7 @@ const App = () => {
         </Route>
 
         <Route path="/Login" element={<Login/>}/>
+        <Route path="/Refer" element={<Refer/>}/>
 
         <Route path="/Sign" element={<Sign/>}/>
 
