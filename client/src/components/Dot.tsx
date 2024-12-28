@@ -89,7 +89,7 @@ const Dot: FC<{ id: string, type: string, color?: string, name?: string }> = ({ 
             setEndDate(new Date(data.data.
                 EndTime))
 
-            setImg(data.data2.FileName)
+            setImg(data.data2?.FileName)
 
         }
         if (data.data2) {
@@ -99,15 +99,27 @@ const Dot: FC<{ id: string, type: string, color?: string, name?: string }> = ({ 
 
 
     }
+    
     const Timmer = async () => {
         await axios.post(`${import.meta.env.VITE_API}Timmer`, {
             id,
             GetHours, todatDate, EndDate
         })
-        setTime(p=>!p)
+        setTime(p => !p)
 
     }
+   
+   
     useEffect(() => {
+
+
+        
+        const data = localStorage.getItem(id)
+        
+       if (data) {
+        setLocation(true)
+       }
+
         type == "List" && TaskApi()
     }, [])
     const arr = ['red', 'green', 'pink', 'gray'];
@@ -122,7 +134,7 @@ const Dot: FC<{ id: string, type: string, color?: string, name?: string }> = ({ 
                             arr.map((p) => <Color click={Handle1} Color={p} />)
                         }
                     </div> : show && type == "List" &&
-                    <div style={{ backgroundColor: color }} className="absolute left-8 z-50 top-6 w-[90%] h-[90vh] rounded-xl overflow-hidden bg-zinc-800  ">
+                    <div style={{ backgroundColor: color }} className="absolute left-8 z-50 top-6 w-[90%] min-h-[90vh] rounded-xl overflow-hidden bg-zinc-800  ">
                         <div   >
                             <div className="flex justify-between text-white  py-5 rounded-sm w-full px-3" >
                                 <div className="text-white font-bold">
@@ -138,6 +150,14 @@ const Dot: FC<{ id: string, type: string, color?: string, name?: string }> = ({ 
                             </div>
                             <div className="flex justify-between px-3">
                                 <div>
+
+
+                                      {
+                                            EndDate && <div className={`${EndDate && EndDate< new Date() ? "bg-red-700" : "bg-yellow-400"}  px-3 py-1 rounded-lg`}>
+                                                {todatDate?.getDate()}-{EndDate?.getDate()}
+                                            </div>
+                                      }
+
                                     {
                                         //@ts-ignore
                                         img && <div
@@ -149,10 +169,10 @@ const Dot: FC<{ id: string, type: string, color?: string, name?: string }> = ({ 
                                     }
 
                                     {
-                                            Location && <div
-                                                className=" bg-slate-700 p-3 my-5 rounded-md">
-                                                <Firma/>
-                                            </div>
+                                        Location && <div
+                                            className=" bg-slate-700 p-3 my-5 rounded-md">
+                                            <Firma />
+                                        </div>
                                     }
                                 </div>
                                 <div className=" flex justify-end ">
@@ -179,7 +199,7 @@ const Dot: FC<{ id: string, type: string, color?: string, name?: string }> = ({ 
                                                 save
                                             </button>
                                         }
-                                            <div onClick={() => setLocation(true)} className=" bg-slate-700 p-3 my-5 rounded-md">
+                                        <div onClick={() =>{!Location&&setLocation(true),localStorage.setItem(id,JSON.stringify(true))}} className=" bg-slate-700 p-3 my-5 rounded-md">
                                             location
                                         </div>
                                         <div>

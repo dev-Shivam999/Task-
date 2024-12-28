@@ -25,11 +25,11 @@ const ListAdd = ({ user }: { user: any }) => {
     }
     return (
         <div className='bg-black p-4 w-[300px] rounded-md flex items-center flex-col my-5  mx-2 border-2'>
-            <button onClick={() => SetAddList(p=>!p)} className='w-32 h-32 rounded-full bg-slate-100'>AddList</button>
+            <button onClick={() => SetAddList(p=>!p)} className='w-32 h-32 rounded-full text-black bg-slate-100'>AddList</button>
             {
                 AddList &&
                 <form className='my-4' onSubmit={(e) => ListApi(e)} >
-                    <input type="text" ref={ListRef} placeholder="name" />
+                    <input type="text" ref={ListRef} className='bg-transparent' placeholder="name" />
                         <button className='font-bold px-3 text-white border-2 border-white rounded'>Add</button>
                 </form>
             }

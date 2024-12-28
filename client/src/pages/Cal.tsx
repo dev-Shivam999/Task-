@@ -1,26 +1,57 @@
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const localizer = momentLocalizer(moment);
+interface Event {
+    title: string,
+    start: Date,
+    end: Date
+}
+interface Set {
+    tasks: Tasks[]
+}
+interface Tasks {
+    title: string
+    timers: timers[]
+}
+interface timers {
+    EndTime: Date,
+    StartTime: Date
+}
 const MyCalendar = () => {
+    const [events, setEvents] = useState<Event[]>([])
+   console.log(events);
+   
     const Api = async () => {
-        await axios.get(`${ import.meta.env.VITE_API }Calender`, {
+        const { data } = await axios.get(`${import.meta.env.VITE_API}Calender`, {
             withCredentials: true,
         })
+        data.map((p: Set) => {
+            p.tasks.map(e => {
+                let event: Event={
+                    title: e.title,
+                    start: e.timers[0].StartTime,
+                    end: e.timers[0].EndTime
+                }
+               
+                setEvents(f => [event, ...f])
+            }
+
+            )
+
+
+        }
+        )
+
     }
     useEffect(() => {
         Api()
 
     }, [])
-    const events = [
-        // { title: 'Event 1', start: new Date(), end: new Date() },
-        // { title: 'Event 1', start: new Date(), end: new Date() },
-        { title: 'Event 1', start: new Date(), end: new Date() },
-        { title: 'Event 2', start: "2024-12-24T12:41:18.108Z", end: new Date() },
-    ];
+
 
     return <Calendar localizer={localizer} events={events} startAccessor="start" endAccessor="end" />;
 };

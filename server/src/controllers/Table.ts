@@ -29,7 +29,6 @@ export const Table = async (req: Request, res: Response) => {
             return res.status(404).json({ success: false, message: "User not found" });
         }
 
-        // Fetch the lists and their associated tasks
         const lists = await ListSchema.aggregate([
             {
                 $match: { userId: userInfo._id },
