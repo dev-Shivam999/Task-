@@ -1,31 +1,12 @@
-import { Request, Response } from "express";
-import jwt from "jsonwebtoken";
-import { ListSchema, UserSchema } from "../models/models";
+import {  Response } from "express";
+import { ListSchema } from "../models/models";
+import { CustomRequest } from "../utils/Types/Types";
 
-export const Calendar = async (req: Request, res: Response) => {
+export const Calendar = async (req: CustomRequest, res: Response) => {
     try {
-        const token = req.cookies?.token;
 
-        if (!token) {
-            return res.status(401).json({ success: false, message: "Please log in" });
-        }
-
-        let userId;
-        try {
-            const decoded = jwt.verify(token,"lol") 
-            userId = decoded;
-        } catch (err) {
-            return res.status(401).json({ success: false, message: "Invalid or expired token" });
-        }
-
-        if (!userId) {
-            return res.status(400).json({ success: false, message: "Invalid userId" });
-        }
-
-        const userInfo = await UserSchema.findById(userId);
-        if (!userInfo) {
-            return res.status(404).json({ success: false, message: "User not found" });
-        }
+       const userInfo= req.User
+       
 
         const calendarData = await ListSchema.aggregate([
             {
@@ -42,11 +23,11 @@ export const Calendar = async (req: Request, res: Response) => {
                 },
             },
             {
-                $unwind: "$tasks", // Flatten the tasks array
+                $unwind: "$tasks", 
             },
             {
                 $lookup: {
-                    from: "timerschemas", // Collection name for timers
+                    from: "timerschemas", 
                     localField: "tasks._id",
                     foreignField: "TaskId",
                     as: "tasks.timers",

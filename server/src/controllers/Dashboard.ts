@@ -1,35 +1,10 @@
-import { Request, Response } from "express";
-import jwt from "jsonwebtoken";
-import { ListSchema, UserSchema } from "../models/models";
+import {  Response } from "express";
+import { ListSchema } from "../models/models";
+import { CustomRequest } from "../utils/Types/Types";
 
-export const Dashboard = async (req: Request, res: Response) => {
+export const Dashboard = async (req: CustomRequest, res: Response) => {
     try {
-        const cookies = req.cookies;
-        const token = cookies?.token;
-
-        if (!token) {
-            return res.json({ success: false, message: "Please log in" });
-        }
-
-        let userId;
-
-        try {
-            const decoded: any = jwt.verify(token, "lol");
-            userId = decoded; 
-            
-        } catch (err) {
-            return res.json({ success: false, message: "Invalid or expired token" });
-        }
-
-        if (!userId ) {
-            return res.json({ success: false, message: "Invalid userId" });
-        }
-
-        const userInfo = await UserSchema.findById(userId);
-
-        if (!userInfo) {
-            return res.json({ success: false, message: "User not found" });
-        }
+       const userInfo=req.User
         const date = Date.now();
       const time=  Math.ceil((userInfo.Timer - date) / (1000 * 60 * 60 * 24)) 
 

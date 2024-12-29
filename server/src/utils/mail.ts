@@ -7,7 +7,7 @@ export const sendMail = mail.createTransport({
     secure: false,
     auth: {
         user: "raviswami512@gmail.com",
-        pass: "tgwt hihm wjje upca"
+        pass: "aezz mkmn fmkx grun"
     }
 
 });

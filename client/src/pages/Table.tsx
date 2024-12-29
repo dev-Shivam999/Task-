@@ -21,9 +21,10 @@ const Table = () => {
         }
     };
 
+    const [Call,SetCall]=useState(false)
     useEffect(() => {
         fetchTableData();
-    }, []);
+    }, [Call]);
     
     return (
         <div className="min-h-[500px] relative">
@@ -101,7 +102,7 @@ const Table = () => {
                     </tbody>
                 </table>
             </div>
-            <TableAdd />
+            <TableAdd SetCall={SetCall} />
         </div>
     );
 };

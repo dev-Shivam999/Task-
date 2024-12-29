@@ -7,30 +7,28 @@ export const Sign = async (req: Request, res: Response) => {
     try {
         const { name, email, password } = req.body;
 
-        
+
         const existing: UserSC | null = await UserSchema.findOne({ email: email });
         if (existing) {
             return res.status(401).json({ success: false, message: "User already exists" });
         } else {
-            
+
             const hash = bcrypt.hashSync(password, 10);
-            
+
             const user: UserSC = await UserSchema.create({ name, email, password: hash });
             await SettingSchema.create({
                 userId: user?._id,
             })
-            await ReferSchema.create({
-                userId: user?._id,
-            })
+           
             const jwtToken = jwt.sign(String(user._id), "lol");
 
-            
+
             return res
                 .cookie("token", jwtToken, {
                     httpOnly: true,
                     sameSite: "strict",
                     secure: true,
-                    maxAge:24*3600000
+                    maxAge: 24 * 3600000
                 })
                 .status(200)
                 .json({ success: true, message: "User created successfully" });

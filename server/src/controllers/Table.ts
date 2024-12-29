@@ -1,33 +1,11 @@
-import { Request, Response } from "express";
-import jwt from "jsonwebtoken";
-import { AttachFileSchema, ListSchema, TimerSchema, UserSchema } from "../models/models";
+import {  Response } from "express";
+import { AttachFileSchema, ListSchema, TimerSchema } from "../models/models";
+import { CustomRequest } from "../utils/Types/Types";
 
-export const Table = async (req: Request, res: Response) => {
+export const Table = async (req: CustomRequest, res: Response) => {
     try {
-        const cookies = req.cookies;
-        const token = cookies?.token;
-
-        if (!token) {
-            return res.status(401).json({ success: false, message: "Please log in" });
-        }
-
-        let userId;
-
-        try {
-            const decoded: any = jwt.verify(token, "lol");
-            userId = decoded;
-        } catch (err) {
-            return res.status(401).json({ success: false, message: "Invalid or expired token" });
-        }
-
-        if (!userId) {
-            return res.status(400).json({ success: false, message: "Invalid userId" });
-        }
-
-        const userInfo = await UserSchema.findById(userId);
-        if (!userInfo) {
-            return res.status(404).json({ success: false, message: "User not found" });
-        }
+       
+        const userInfo=req.User
 
         const lists = await ListSchema.aggregate([
             {

@@ -29,7 +29,7 @@ const Home = () => {
             );
 
             if (!data.success) {
-                if (data.message !== "Time Over") {
+                if (data.message !== "Time Over" || data.message == "Please log in") {
                     navigate("/Login");
                 } else {
                     alert(data.message);
@@ -71,7 +71,7 @@ const Home = () => {
             <div className="flex py-5 gap-3 items-center">
                 <Template setUser={setUser} />
                 <AddUser />
-           </div>
+            </div>
 
 
             <div

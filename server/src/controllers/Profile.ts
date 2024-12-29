@@ -1,34 +1,24 @@
-import { Request, Response } from "express";
-import { UserSchema } from "../models/models";
+import { Response } from "express";
+
+import { CustomRequest } from "../utils/Types/Types";
 
 import jwt from "jsonwebtoken";
+import { UserSchema } from "../models/models";
+export const Profile = async (req: CustomRequest, res: Response) => {
 
-export const Profile = async (req: Request, res: Response) => {
+    const UserCookie = req.cookies
 
-    const cookies = req.cookies;
-    const token = cookies?.token;
 
-    if (!token) {
-        return res.json({ success: false, message: "Please log in" });
+    let userInfo = req.User
+
+    if (UserCookie.token2 != undefined) {
+        const decoded: any = jwt.verify(UserCookie.token2, "lol");
+        //@ts-ignore
+        userInfo = await UserSchema.findById(decoded)
+
     }
 
-    let userId;
-
-    try {
-        const decoded: any = jwt.verify(token, "lol");
-        userId = decoded;
-
-    } catch (err) {
-        return res.json({ success: false, message: "Invalid or expired token" });
-    }
-
-    if (!userId) {
-        return res.json({ success: false, message: "Invalid userId" });
-    }
-
-    const data = await UserSchema.findById(userId, { name: true, email: true, Color: true })
-
-    res.json({ success: true, message: data });
+    res.json({ success: true, message: userInfo });
 
 
 

@@ -1,38 +1,28 @@
-import { Request, Response } from "express";
-import jwt from "jsonwebtoken";
+import { Response } from "express";
 import {  SettingSchema, UserSchema } from "../models/models";
+import { CustomRequest } from "../utils/Types/Types";
 
-export const Dashboard1 = async (req: Request, res: Response) => {
+import jwt from "jsonwebtoken";
+
+export const Dashboard1 = async (req: CustomRequest, res: Response) => {
     try {
-        const cookies = req.cookies;
-        const token = cookies?.token;
+        const UserCookie=req.cookies
+        
 
-        if (!token) {
-            return res.json({ success: false, message: "Please log in" });
+        let userInfo = req.User
+        
+        if (UserCookie.token2!=undefined) {
+            const decoded: any = jwt.verify(UserCookie.token2, "lol");
+                    //@ts-ignore
+            userInfo=await UserSchema.findById(decoded)
+           
         }
-
-        let userId;
-
-        try {
-            const decoded: any = jwt.verify(token, "lol");
-            userId = decoded;
-
-        } catch (err) {
-            return res.json({ success: false, message: "Invalid or expired token" });
-        }
-
-        if (!userId) {
-            return res.json({ success: false, message: "Invalid userId" });
-        }
-
-        const userInfo = await UserSchema.findById(userId);
-        if (!userInfo) {
-            return res.json({ success: false, message: "User not found" });
-        }
+        
+       
         const date = Date.now();
         const time = Math.ceil((userInfo.Timer - date) / (1000 * 60 * 60 * 24))
 
-        const Show = await SettingSchema.findOne({ userId: userId })
+        const Show = await SettingSchema.findOne({ userId: userInfo._id })
 
         if (time > 0) {
 

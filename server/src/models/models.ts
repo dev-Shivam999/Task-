@@ -1,5 +1,5 @@
 import mongoose, { Model } from "mongoose";
-import { AttachFileType, ListType, TaskType, TimerType, User } from "../utils/Types/Types";
+import { AttachFileType, ListType, ReferType, TaskType, TimerType, User } from "../utils/Types/Types";
 
 
 
@@ -39,15 +39,19 @@ const UserLogin = new mongoose.Schema(
     { timestamps: true }
 );
 
-const Refer=new mongoose.Schema({
+const Refer = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "UserSchema",
         required: true,
     },
-    Code:{
-        type:Number,
-        default:Math.floor(Math.random()*1000)
+    Code: {
+        type: Number,
+        default: Math.floor(Math.random() * 10000)
+    },
+    Leader: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -159,9 +163,9 @@ const AttachFile = new mongoose.Schema({
 })
 
 export const UserSchema: Model<UserSC> = mongoose.model<UserSC>("UserSchema", UserLogin);
-export const ListSchema: Model<ListType> = mongoose.model<ListType>("ListSchema", List);
-export const TaskSchema: Model<TaskType> = mongoose.model<TaskType>("TaskSchema", Task);
-export const TimerSchema: Model<TimerType> = mongoose.model<TimerType>("TimerSchema", Timer);
-export const AttachFileSchema: Model<AttachFileType> = mongoose.model<AttachFileType>("AttachFileSchema", AttachFile);
+export const ListSchema: Model<ListType & mongoose.Document> = mongoose.model<ListType & mongoose.Document>("ListSchema", List);
+export const TaskSchema: Model<TaskType & mongoose.Document> = mongoose.model<TaskType & mongoose.Document>("TaskSchema", Task);
+export const TimerSchema: Model<TimerType & mongoose.Document> = mongoose.model<TimerType & mongoose.Document>("TimerSchema", Timer);
+export const AttachFileSchema: Model<AttachFileType & mongoose.Document> = mongoose.model<AttachFileType & mongoose.Document>("AttachFileSchema", AttachFile);
+export const ReferSchema: Model<ReferType & mongoose.Document> = mongoose.model<ReferType & mongoose.Document>("ReferSchema", Refer);
 export const SettingSchema = mongoose.model("SettingSchema", Setting);
-export const ReferSchema = mongoose.model("ReferSchema", Refer);

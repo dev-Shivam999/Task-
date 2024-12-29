@@ -15,7 +15,7 @@ const Refer = () => {
                 const { data } = await axios.post(
                     `${import.meta.env.VITE_API}Refer`,
                     {
-                        Refer: name.current?.value,
+                        refer: name.current?.value,
                     },
                     { withCredentials: true }
                 );
