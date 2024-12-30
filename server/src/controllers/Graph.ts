@@ -12,15 +12,7 @@ export const Graph = async (req: CustomRequest, res: Response) => {
                     userId: user._id,
                 },
             },
-            {
-                $lookup: {
-                    from: "taskschemas",
-                    localField: "_id",
-                    foreignField: "listId",
-                    as: "tasks",
-                },
-            },
-        
+            
             {
                 $lookup:{
                      from:"timeschemas",
