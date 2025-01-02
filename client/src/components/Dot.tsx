@@ -24,7 +24,7 @@ const Dot: FC<{ id: string, type: string, color?: string, name?: string }> = ({ 
 
 
     const Handle1 = async (Color: string) => {
-        console.log("hi");
+
 
         const { data } = await axios.put(`${import.meta.env.VITE_API}UpdateColor`, {
             type: type,
