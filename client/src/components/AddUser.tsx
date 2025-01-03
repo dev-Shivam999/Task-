@@ -18,7 +18,6 @@ const AddUser = () => {
         setUser(data.message[0].userNames)
         setId(data.selfId)
     }
-
     useEffect(() => {
         if (Show) {
             Api()
