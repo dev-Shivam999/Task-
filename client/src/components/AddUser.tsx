@@ -24,7 +24,6 @@ const AddUser = () => {
         }
     }, [Show])
 
-
     return (
         <div className="cursor-pointer" >
             <div onClick={() => SetShow(p => !p)}>
