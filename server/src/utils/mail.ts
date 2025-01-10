@@ -2,12 +2,11 @@ import mail from 'nodemailer'
 
 export const sendMail = mail.createTransport({
     service: "gmail",
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
+    port: 465,
+    secure: true,
     auth: {
-        user: "raviswami512@gmail.com",
-        pass: "qsoe jeuv wcfw iilt"
+        user: "raviswamiji512@gmail.com",
+        pass: "qsoejeuvwcfwiilt"
     }
 
 });

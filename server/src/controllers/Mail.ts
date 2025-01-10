@@ -17,7 +17,7 @@ export const Mail = async (req: CustomRequest, res: Response) => {
                 Leader: true
             })
             const info = await sendMail.sendMail({
-                from: 'raviswami512@gmail.com',
+                from: 'raviswamiji512@gmail.com',
                 to: `${mail}`,
                 subject: "Trello Refer code ",
                 text: ` you get a reference from the user to their get refer code ${Co.Code} `
