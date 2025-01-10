@@ -9,12 +9,13 @@ const Mail = () => {
         if (mail.current?.value) {
             setLoading(p => !p)
           const {data}=  await axios.post(`${import.meta.env.VITE_API}Email`, {
-                email: mail.current.value
+                mail: mail.current.value
             },{
                 withCredentials: true
             })
             if (data.success) {
                 setLoading(p=>!p);
+                alert("code send successfully");
             }else{
                 alert(data.messageId)
                 setLoading(p=>!p);

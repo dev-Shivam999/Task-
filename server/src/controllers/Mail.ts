@@ -4,40 +4,49 @@ import { CustomRequest } from "../utils/Types/Types";
 import { ReferSchema } from "../models/models";
 
 export const Mail = async (req: CustomRequest, res: Response) => {
-    const { mail } = await req.body
-    const user = req.User
+    const { mail } = req.body; 
+    const user = req.User;
 
+    if (!mail) {
+        return res.json({ success: false, message: "Recipient email is required" });
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(mail)) {
+        return res.json({ success: false, message: "Invalid email address" });
+    }
 
     try {
+        const data = await ReferSchema.findOne({ userId: user._id });
 
-        const data = await ReferSchema.findOne({ userId: user._id })
-        if (data == null) {
+        if (!data) {
             const Co = await ReferSchema.create({
                 userId: user?._id,
-                Leader: true
-            })
+                Leader: true,
+            });
+
             const info = await sendMail.sendMail({
-                from: 'raviswamiji512@gmail.com',
-                to: `${mail}`,
-                subject: "Trello Refer code ",
-                text: ` you get a reference from the user to their get refer code ${Co.Code} `
-            })
+                from: "raviswamiji512@gmail.com",
+                to: mail,
+                subject: "Trello Refer code",
+                text: `You get a reference from the user. Their refer code is <h1>${Co.Code}</h1>`,
+            });
+
             console.log("Message sent: %s", info.messageId);
-            res.json({ success: true, messageId: info.messageId })
+            return res.json({ success: true, messageId: info.messageId });
         }
 
         const info = await sendMail.sendMail({
-            from: 'raviswami512@gmail.com',
-            to: `${mail}`,
-            subject: "Trello Refer code ",
-            text: ` you get a reference from the user to their get refer code ${data?.Code} `
-        })
+            from: "raviswamiji512@gmail.com",
+            to: mail,
+            subject: "Trello Refer code",
+            text: `You get a reference from the user. Their refer code is ${data?.Code}`,
+        });
+
         console.log("Message sent: %s", info.messageId);
-        res.json({ success: true, messageId: info.messageId })
-
+        res.json({ success: true, messageId: info.messageId });
     } catch (error) {
-        console.log("error: ", error);
-        res.json({ success: false, messageId: "try again" })
-
+        console.error("Error: ", error);
+        res.status(500).json({ success: false, message: "Internal server error" });
     }
-}
+};
