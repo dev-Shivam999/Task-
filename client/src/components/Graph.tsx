@@ -30,13 +30,9 @@ function Graph() {
                 withCredentials: true,
             });
 
-            console.log("API Data:", data); 
-            if (!data.data.user || !Array.isArray(data.data.user)) {
-                console.error("Unexpected API response format:", data);
-                return;
-            }
+            console.log("API Data:", data.data);
 
-            const listData = data.data.user.map((listItem: any) => ({
+            const listData = data.data.map((listItem: any) => ({
                 name: listItem.list || "Unnamed List",
                 taskCount: listItem.tasks ? listItem.tasks.length : 0,
             }));
@@ -46,11 +42,21 @@ function Graph() {
                 counts: listData.map((item: any) => item.taskCount),
             });
 
-            const allTasks = data.data.user.flatMap((listItem: any) => listItem.tasks || []);
+            const allTasks = data.data.flatMap((listItem: any) => listItem.tasks || []);
+            const currentTime = new Date().toISOString();
+
             const statusCounts = allTasks.reduce(
                 (acc: { [key: string]: number }, task: any) => {
-                    const status = task.isComplete ? "Completed" : "Pending";
-                    acc[status] = (acc[status] || 0) + 1;
+                   
+                        const hasTimers = task.timers && task.timers.length > 0;
+                        const isExpired = hasTimers && task.timers.some((timer: any) => timer.EndTime && timer.EndTime < currentTime);
+
+                        if (isExpired) {
+                            acc["Expired"] = (acc["Expired"] || 0) + 1;
+                        } else {
+                            acc["Pending"] = (acc["Pending"] || 0) + 1;
+                        }
+                    
                     return acc;
                 },
                 {}
@@ -75,7 +81,7 @@ function Graph() {
             {
                 label: "Number of Tasks per List",
                 data: barChartData.counts,
-                backgroundColor: ["#f59e0b", "#3b82f6", "#10b981", "#ef4444", "#8b5cf6"], // Custom colors
+                backgroundColor: ["#f59e0b", "#3b82f6", "#10b981", "#ef4444", "#8b5cf6"],
                 borderWidth: 1,
             },
         ],
@@ -87,7 +93,7 @@ function Graph() {
             {
                 label: "Task Status Distribution",
                 data: doughnutChartData.counts,
-                backgroundColor: ["#10b981", "#f59e0b"], 
+                backgroundColor: ["#351fd6", "#f40707", "#ef444"],
                 borderWidth: 1,
             },
         ],
@@ -95,19 +101,18 @@ function Graph() {
 
     return (
         <>
-            <h1 className="text-2xl  font-bold mb-6">Task Charts</h1>
-            <div className=" flex  p-6 bg-white  mx-auto w-full justify-around items-center">
+            <h1 className="text-2xl font-bold mb-6">Task Charts</h1>
+            <div className="flex p-6 bg-white mx-auto w-full justify-around items-center">
+                <div className="w-[500px] mb-10">
+                    <h2 className="text-lg font-semibold mb-4">Tasks per List</h2>
+                    <Bar data={barData} />
+                </div>
 
-            <div className="w-[500px] mb-10">
-                <h2 className="text-lg font-semibold mb-4"> Tasks per List</h2>
-                <Bar data={barData} />
+                <div className="w-[400px]">
+                    <h2 className="text-lg font-semibold mb-4">Task Status</h2>
+                    <Doughnut data={doughnutData} />
+                </div>
             </div>
-
-            <div className="w-[400px]">
-                <h2 className="text-lg font-semibold mb-4"> Task Status</h2>
-                <Doughnut data={doughnutData} />
-            </div>
-        </div>
         </>
     );
 }
