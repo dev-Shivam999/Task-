@@ -29,7 +29,7 @@ export const Mail = async (req: CustomRequest, res: Response) => {
                 from: "raviswamiji512@gmail.com",
                 to: mail,
                 subject: "Trello Refer code",
-                text: `You get a reference from the user. Their refer code is <h1>${Co.Code}</h1>`,
+                text: `You get a reference from the user. Their refer code is ${Co.Code}`,
             });
 
             console.log("Message sent: %s", info.messageId);

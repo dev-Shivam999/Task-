@@ -14,7 +14,7 @@ export const Graph = async (req: CustomRequest, res: Response) => {
             },
             {
                 $lookup: {
-                    from: "taskschemas", // Name of the TaskSchema collection
+                    from: "taskschemas",
                     localField: "_id",
                     foreignField: "listId",
                     as: "tasks",
@@ -23,20 +23,20 @@ export const Graph = async (req: CustomRequest, res: Response) => {
             {
                 $unwind: {
                     path: "$tasks",
-                    preserveNullAndEmptyArrays: true, // Keep lists even if they have no tasks
+                    preserveNullAndEmptyArrays: true,
                 },
             },
             {
                 $lookup: {
-                    from: "timerschemas", // Name of the TimerSchema collection
+                    from: "timerschemas", 
                     localField: "tasks._id",
                     foreignField: "TaskId",
-                    as: "tasks.timers", // Embed timers under each task
+                    as: "tasks.timers",
                 },
             },
             {
                 $group: {
-                    _id: "$_id", // Group back into lists
+                    _id: "$_id", 
                     userId: { $first: "$userId" },
                     Color: { $first: "$Color" },
                     list: { $first: "$list" },
