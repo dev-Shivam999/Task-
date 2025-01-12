@@ -59,3 +59,5 @@ export const Graph = async (req: CustomRequest, res: Response) => {
         res.status(500).json({ success: false, message: "Server error" });
     }
 };
+
+
