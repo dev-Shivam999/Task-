@@ -47,6 +47,7 @@ export const Calendar = async (req: CustomRequest, res: Response) => {
                 },
             },
             {
+                
                 $project: {
                     color: 1,
                     list: 1,
