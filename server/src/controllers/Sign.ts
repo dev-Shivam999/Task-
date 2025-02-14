@@ -24,12 +24,7 @@ export const Sign = async (req: Request, res: Response) => {
 
 
             return res
-                .cookie("token", jwtToken, {
-                    
-                    sameSite: "strict",
-                    secure: true,
-                    maxAge: 24 * 3600000
-                })
+                .cookie("token", jwtToken)
                 .status(200)
                 .json({ success: true, message: "User created successfully" });
         }

@@ -22,13 +22,7 @@ export const Login = async (req: Request, res: Response) => {
 
         
         return res
-            .cookie("token", jwtToken, {
-               
-                sameSite: "strict",
-                secure: true,
-
-                maxAge: 24 * 3600000
-            })
+            .cookie("token", jwtToken)
             .status(200)
             .json({ success: true, message: "Login successful" });
     } catch (error) {
