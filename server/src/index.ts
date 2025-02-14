@@ -9,7 +9,7 @@ import cookieParser from 'cookie-parser'
 
 DB()
 app.use(cors({
-  origin: ["http://localhost:5173", "http://192.168.1.18:5173",'http://172.18.112.1:5173/'],
+  origin: `${process.env.URL}`,
     credentials:true
 }))
 app.use(cookieParser())

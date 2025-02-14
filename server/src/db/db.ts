@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 export const DB = async () => {
     try {
-        await mongoose.connect("mongodb://127.0.0.1:27017/TodayTask")
+        await mongoose.connect(`${process.env.DB}`, )
         console.log("db connection established");
 
     } catch (error) {
