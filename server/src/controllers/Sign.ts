@@ -25,7 +25,7 @@ export const Sign = async (req: Request, res: Response) => {
 
             return res
                 .cookie("token", jwtToken, {
-                    httpOnly: true,
+                    
                     sameSite: "strict",
                     secure: true,
                     maxAge: 24 * 3600000
