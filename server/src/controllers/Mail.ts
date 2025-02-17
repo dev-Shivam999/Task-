@@ -27,7 +27,7 @@ export const Mail = async (req: CustomRequest, res: Response) => {
                 Leader: true,
             });
             const emailHtml = await ejs.renderFile(
-                path.join(__dirname, "../views/index.ejs"),
+                path.join(__dirname, "../../views/index.ejs"),
                 { referCode: Co.Code, sender: user.name }
             );
 
