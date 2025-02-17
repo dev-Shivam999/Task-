@@ -6,6 +6,8 @@ import cookieParser from 'cookie-parser';
 import os from 'os';
 import cluster from 'cluster';
 import dotenv from 'dotenv';
+import path from 'path';
+import ejs from 'ejs';
 
 dotenv.config();
 
@@ -15,7 +17,6 @@ const cpuCount = os.cpus().length;
 if (cluster.isPrimary) {
   console.log(`Primary process ${process.pid} is running`);
 
-  // Fork workers
   for (let i = 0; i < cpuCount; i++) {
     cluster.fork();
   }
@@ -25,7 +26,6 @@ if (cluster.isPrimary) {
     cluster.fork();
   });
 } else {
-  // Run the server only in worker processes
   const app = express();
   DB();
 
@@ -36,7 +36,11 @@ if (cluster.isPrimary) {
     })
   );
   app.use(cookieParser());
+  app.set("view engine", "ejs");
+  app.set("views", path.join(__dirname, "views")); 
+
   app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
   app.use('/api', Router);
 
   app.get('/', (req: Request, res: Response) => {

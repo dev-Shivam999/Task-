@@ -2,6 +2,8 @@ import { Response } from "express";
 import { sendMail } from "../utils/mail";
 import { CustomRequest } from "../utils/Types/Types";
 import { ReferSchema } from "../models/models";
+import ejs from "ejs";
+import path from "path";
 
 export const Mail = async (req: CustomRequest, res: Response) => {
     const { mail } = req.body; 
@@ -24,12 +26,16 @@ export const Mail = async (req: CustomRequest, res: Response) => {
                 userId: user?._id,
                 Leader: true,
             });
+            const emailHtml = await ejs.renderFile(
+                path.join(__dirname, "../views/index.ejs"),
+                { referCode: Co.Code, sender: user.name }
+            );
 
             const info = await sendMail.sendMail({
                 from: "raviswamiji512@gmail.com",
                 to: mail,
                 subject: "Trello Refer code",
-                text: `You get a reference from the user. Their refer code is ${Co.Code}`,
+                html:emailHtml
             });
 
             console.log("Message sent: %s", info.messageId);
