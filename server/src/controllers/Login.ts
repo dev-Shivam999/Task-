@@ -23,7 +23,9 @@ export const Login = async (req: Request, res: Response) => {
         
         return res
             .cookie("token", jwtToken,{
-                sameSite:"none",
+                httpOnly: true,
+                sameSite: "strict",
+                secure: true,
                 
             })
             .status(200)
