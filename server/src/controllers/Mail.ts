@@ -6,7 +6,7 @@ import ejs from "ejs";
 import path from "path";
 
 export const Mail = async (req: CustomRequest, res: Response) => {
-    const { mail } = req.body; 
+    const { mail } = req.body;
     const user = req.User;
 
     if (!mail) {
@@ -26,17 +26,23 @@ export const Mail = async (req: CustomRequest, res: Response) => {
                 userId: user?._id,
                 Leader: true,
             });
-            const emailHtml = await ejs.renderFile(
-                path.join(__dirname, "../../views/index.ejs"),
-                { referCode: Co.Code, sender: user.name }
-            );
+            // const emailHtml = await ejs.renderFile(
+            //     path.join(__dirname, "./views/index.ejs"),
+            //     { referCode: Co.Code, sender: user.name }
+            // );
 
             const info = await sendMail.sendMail({
                 from: "raviswamiji512@gmail.com",
                 to: mail,
                 subject: "Trello Refer code",
-                html:emailHtml
-            });
+                html: `  <h2>Hello,</h2>
+    <p>You have received a reference from <strong>
+            <%= sender %>
+        </strong>.</p>
+    <p>Your refer code is: <strong style="color: blue; font-size: 18px;">
+            <%= referCode %>
+        </strong></p>
+    <p>Use this code to register and get rewards!</p>`            });
 
             console.log("Message sent: %s", info.messageId);
             return res.json({ success: true, messageId: info.messageId });
