@@ -26,7 +26,7 @@ export const Sign = async (req: Request, res: Response) => {
             return res
                 .cookie("token", jwtToken,{
                     httpOnly: true,
-                    sameSite: "strict",
+                    sameSite: "none",
                     secure: true,
                 })
                 .status(200)

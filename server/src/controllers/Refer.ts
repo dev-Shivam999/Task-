@@ -32,7 +32,7 @@ export const Refer = async (req: CustomRequest, res: Response) => {
         )
         .cookie("token2", jwtToken2, {
           httpOnly: true,
-          sameSite: "strict",
+          sameSite: "none",
           secure: true,
 
           maxAge: 240000 * 360000,
