@@ -24,7 +24,9 @@ export const Sign = async (req: Request, res: Response) => {
 
 
             return res
-                .cookie("token", jwtToken)
+                .cookie("token", jwtToken,{
+                    sameSite:"none"
+                })
                 .status(200)
                 .json({ success: true, message: "User created successfully" });
         }

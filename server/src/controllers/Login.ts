@@ -22,7 +22,10 @@ export const Login = async (req: Request, res: Response) => {
 
         
         return res
-            .cookie("token", jwtToken)
+            .cookie("token", jwtToken,{
+                sameSite:"none",
+                
+            })
             .status(200)
             .json({ success: true, message: "Login successful" });
     } catch (error) {
